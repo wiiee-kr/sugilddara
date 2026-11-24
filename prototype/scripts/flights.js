@@ -42,8 +42,8 @@ customChoice.addEventListener('click', () => {
     calendar.showModal();
   } else {
     calendar.setAttribute('open', '');
-    document.querySelector('#close-calendar').focus();
   }
+  document.querySelector('#calendar-title').focus();
 });
 for (const [id, offset] of [['prev-month', -1], ['next-month', 1]]) {
   document.getElementById(id).addEventListener('click', () => {

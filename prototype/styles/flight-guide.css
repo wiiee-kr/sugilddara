@@ -1,13 +1,15 @@
 .guide { min-height: calc(100svh - var(--app-bar-offset) - var(--app-bar-height)); }
 #official { display: inline-flex; align-items: center; min-height: 48px; color: #405064; text-underline-offset: 4px; }
-.ticket { margin-top: 0; padding-bottom: 18px; border-bottom: 1px solid #dce3ea; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
+.ticket { margin-top: 0; padding-bottom: 12px; border-bottom: 1px solid #dce3ea; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
 .ticket span { color: #566373; }
-.progress { margin: 28px 0 6px; color: #005ebc; font-weight: 600; }
+.progress { margin: 12px 0 8px; color: #005ebc; font-weight: 600; }
 .guide h1 { font-size: 1.75rem; }
 .guide h1:focus { outline: none; }
 .location { margin: 24px 0 14px; padding: 18px 20px; background: #eff6ff; border-radius: 16px; }
 .location h2 { font-size: var(--type-label); color: #365777; }
 .location dl { margin: 12px 0 0; }
+.location--check-in { padding: 20px 20px 14px; }
+.location--check-in dl { margin: 0; }
 .location dt { color: #465b70; }
 .location dd { margin: 0; color: #173959; font-size: 1.625rem; font-weight: 600; }
 .location dd + dt { margin-top: 12px; padding-top: 12px; border-top: 1px solid #cedff1; }

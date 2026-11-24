@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="styles/fonts.css">
 <link rel="stylesheet" href="styles/design-system.css">
 <link rel="stylesheet" href="styles/app-nav.css">
-<link rel="stylesheet" href="styles/flights.css?v=calendar-close-3">
+<link rel="stylesheet" href="styles/flights.css?v=calendar-focus-1">
 <link rel="stylesheet" href="styles/airport-order.css">
 </head><body>
 <main>
@@ -51,12 +51,12 @@
 <a href="mypage.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4.5"/><path d="M3 21a9 9 0 0 1 18 0z"/></svg>마이</a>
 </nav>
 <dialog id="calendar" aria-labelledby="calendar-title">
-<h2 id="calendar-title">날짜 선택</h2>
+<h2 id="calendar-title" tabindex="-1" autofocus>날짜 선택</h2>
 <div class="month-nav"><button type="button" id="prev-month" aria-label="이전 달">‹</button><strong id="month" aria-live="polite"></strong><button type="button" id="next-month" aria-label="다음 달">›</button></div>
 <div class="weekdays" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
 <div id="days"></div>
 <button type="button" id="close-calendar">닫기</button>
 </dialog>
 <script src="scripts/airport-order.js"></script>
-<script src="scripts/flights.js?v=order-1"></script>
+<script src="scripts/flights.js?v=calendar-focus-1"></script>
 </body></html>

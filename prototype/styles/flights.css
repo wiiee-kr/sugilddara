@@ -31,3 +31,5 @@ button { width: 100%; margin-top: 28px; min-height: var(--button-solid-primary-h
 #choose-date[aria-pressed="true"] { background: #edf5ff; border-color: var(--ds-product-primary); color: #005fbf; font-weight: 600; }
 #calendar:not([open]) { display: none; }
 #calendar[open] { position: fixed; inset: 0; height: fit-content; margin: auto; z-index: 10; background: white; }
+
+#calendar-title:focus { outline: none; }

@@ -55,6 +55,7 @@ function renderGuide() {
   title.textContent = step.title;
   document.querySelector('#detail').textContent = step.detail;
   const facts = document.querySelector('#facts');
+  facts.parentElement.classList.toggle('location--check-in', !arriving && index === 0);
   facts.replaceChildren();
   for (const [label, value] of step.facts) {
     const term = document.createElement('dt');
