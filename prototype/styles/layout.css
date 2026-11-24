@@ -1,0 +1,303 @@
+
+
+/* Desktop tab previews use the community phone's dimensions and offsets. */
+@media (min-width: 521px) {
+  html:has(body > :is(#hike-home:not([hidden]), .my-page, aside + main#app)) {
+    background: #ededed;
+  }
+
+  body:has(> :is(#hike-home:not([hidden]), .my-page, aside + main#app)) {
+    box-sizing: border-box;
+    position: relative;
+    width: 430px;
+    height: min(860px, calc(100dvh - 56px));
+    min-height: 0;
+    margin: 35px auto 0;
+    padding: 0;
+    background: white;
+    border: 1px solid #dedede;
+    border-radius: 24px;
+    overflow: clip;
+    /* Keep fixed navigation and actions inside the preview. */
+    transform: translateZ(0);
+  }
+
+  body > :is(#hike-home, .my-page, aside + main#app) {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    padding-bottom: calc(var(--bottom-nav-height) + var(--bottom-nav-offset) + 16px);
+  }
+
+  body > aside:has(+ main#app) { display: none; }
+  body > aside + main#app { border: 0; padding-inline: 16px; }
+}
+/* Shared gap from the app bar edge to the first body element. */
+:root { --app-body-gap: 16px; }
+
+.app-bar + main,
+.page-bar + main { padding-top: var(--app-body-gap); }
+.page-bar + main > .profile:first-child { padding-top: 0; }
+
+.topbar + .view { padding-top: var(--app-body-gap); }
+.topbar + .view > :is(.detail, .editor, .searchbox, .empty, .blocked-row, .post):first-child {
+  padding-top: 0;
+  margin-top: 0;
+}
+.topbar + .view > #post-list > .post:first-child { padding-top: 0; }
+.topbar + .view > #post-list > .post:first-child h2,
+.topbar + .view > .post:first-child h2 { margin-top: 0; }
+.topbar + .view > .editor:first-child { min-height: calc(100% - var(--app-body-gap)); }
+.topbar + .empty { margin-top: 0; padding-top: var(--app-body-gap); }
+
+/* Packing screens render their app bar inside the main element. */
+main:not(#app) > header { margin-bottom: var(--app-body-gap); }
+main:not(#app) > header + h1 { margin-top: 0; }
+
+/* App-wide 48px bars; safe area sits above the content height. */
+:root { --app-bar-height: 48px; }
+.app-bar,
+.page-bar,
+.topbar,
+main#app > header {
+  box-sizing: border-box;
+  height: calc(var(--app-bar-height) + env(safe-area-inset-top));
+  min-height: calc(var(--app-bar-height) + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: 0;
+  flex-shrink: 0;
+}
+/* Packing has its app bar inside main: remove the old outer top padding. */
+body > main#app { padding-top: 0; }
+
+/* Consistent medium-weight app bar titles across every screen. */
+.app-bar h1,
+.page-bar h1,
+.topbar h1,
+main#app > header > strong {
+  font-weight: 500;
+}
+
+/* The app-bar row stays transparent; only its floating groups have a surface. */
+:root {
+  --floating-bar-shadow: 0 4px 24px rgb(0 0 0 / 10%), 0 1px 4px rgb(0 0 0 / 3%);
+  --app-bar-shadow: 0 0 8px rgb(0 0 0 / 8%), 0 0 2px rgb(0 0 0 / 2%);
+  --app-bar-offset: calc(12px + env(safe-area-inset-top));
+}
+.app-bar, .page-bar, .topbar, main#app > header {
+  position: sticky;
+  top: var(--app-bar-offset);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+  width: calc(100% - 32px);
+  max-width: 448px;
+  height: var(--app-bar-height);
+  min-height: var(--app-bar-height);
+  margin: var(--app-bar-offset) auto 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.app-bar h1, .page-bar h1, .topbar h1, body > main#app > header .app-bar__leading > strong {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-app);
+  font-size: var(--type-heading);
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: normal;
+  color: #191919;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+ .app-bar__leading, .app-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: var(--app-bar-height);
+  box-sizing: border-box;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--nav-surface, #fff);
+  box-shadow: var(--app-bar-shadow);
+}
+.app-bar__leading { flex: 0 1 auto; min-width: 0; padding-left: 0; padding-right: 20px; }
+.app-bar__actions { flex: 0 0 auto; margin-left: auto; }
+.app-bar__icon, .topbar .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: inherit;
+  background: transparent;
+  text-decoration: none;
+}
+.app-bar__icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+:is(.app-bar, .page-bar, .topbar, .header, main#app > header) [aria-label="뒤로가기"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  padding: 0;
+}
+:is(.app-bar, .page-bar, .topbar, .header, main#app > header) [aria-label="뒤로가기"] > svg {
+  display: block;
+  flex-shrink: 0;
+  margin: 0;
+}
+svg.navigation-icon {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+svg.navigation-icon--share { width: 20px; height: 20px; }
+.app-bar__icon:active, .topbar .icon:active { background: var(--nav-pressed, #f5f5f5); }
+.page-actions { display: flex; justify-content: flex-end; flex-shrink: 0; padding: var(--app-body-gap) 16px 0; }
+.page-actions + .view { padding-top: var(--app-body-gap); }
+body > main#app > header { width: calc(100% + 20px); margin-left: -10px; margin-bottom: var(--app-body-gap); }
+@media (max-width: 900px) { body > main#app > header { width: calc(100% + 8px); margin-left: -4px; } }
+
+/* Packing's main supplies the same horizontal inset as the home header. */
+body > main#app:has(.packing-home-actions) {
+  padding-inline: 16px;
+}
+body > main#app:has(.packing-home-actions) > header {
+  width: 100%;
+  margin-inline: auto;
+}
+
+/* Community uses a flex frame, so its top inset is set by the header margin. */
+body[data-host-prefix] > .note { display: none; }
+body[data-host-prefix] > .phone { margin-top: 35px; }
+@media (max-width: 520px) {
+  body[data-host-prefix] > .phone { margin-top: 0; height: 100dvh; max-width: none; }
+}
+.topbar .app-bar__actions .icon svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.9;
+}
+
+/* Tabs are the first body element on activity screens. */
+.topbar + .activity-tabs { margin-top: var(--app-body-gap); }
+
+/* Menu rows on depth-two and deeper screens. */
+:root { --detail-menu-gap: 8px; --detail-menu-padding-y: 8px; }
+.detail-menu-list { display: flex; flex-direction: column; gap: var(--detail-menu-gap); }
+.settings-content .settings-row + .settings-row,
+.settings-content .menu-item + .menu-item { margin-top: var(--detail-menu-gap); }
+
+.detail-menu-list > *,
+.settings-content .settings-row,
+.settings-content .menu-item {
+  min-height: 0;
+  padding-block: var(--detail-menu-padding-y);
+}
+
+/* My menu and depth-two list labels always share one size token. */
+:root { --menu-label-font-size: var(--type-body); }
+.menu-item,
+.settings-content .settings-row,
+.settings-content .detail-menu-list > label,
+.notification-toggle__title,
+.blocked-list .blocked-name {
+  font-size: var(--menu-label-font-size);
+}
+
+/* Menu rows have no pointer-press or native tap highlight. */
+.menu-item, .menu-item * { -webkit-tap-highlight-color: transparent; }
+.menu-item:hover, .menu-item:active { background: transparent; }
+.menu-item:active .menu-icon { background: transparent; opacity: 1; filter: none; }
+
+/* CTA label size: one step above each existing button size. */
+:root { --cta-label-size: var(--type-body); --cta-label-large-size: var(--type-heading); }
+.primary, .text-action, .settings-button, .edit-button, .unblock-button,
+.photo-edit { font-size: var(--cta-label-size); }
+.dialog-actions button, #profile-form .save-button,
+body > main#app .primary, body > main#app .sticky button,
+body:has(> main#app) dialog .actions button {
+  font-size: var(--cta-label-large-size);
+}
+.sheet .cancel { font-size: var(--cta-label-size); }
+
+/* Compact CTAs step down; full-width CTAs retain their larger labels. */
+:root { --cta-label-compact-size: var(--type-label); }
+.text-action, .unblock-button, .photo-edit, .edit-button,
+.primary:not(.wide) { font-size: var(--cta-label-compact-size); }
+.sheet .primary, .poll .primary { font-size: var(--cta-label-size); }
+.dialog-actions button,
+body > main#app .primary:not(.wide),
+body:has(> main#app) dialog .actions button { font-size: var(--cta-label-size); }
+body > main#app .stack > .primary { font-size: var(--cta-label-large-size); }
+
+/* A single app-bar icon occupies a square 48px capsule. */
+.app-bar__actions:has(> :is(.app-bar__icon, .icon):only-child),
+.app-bar__leading:has(> :is(.app-bar__icon, .icon):first-child):not(:has(> :nth-child(n+2):not([hidden]))) {
+  width: var(--app-bar-height); min-width: var(--app-bar-height);
+  flex-basis: var(--app-bar-height); padding: 2px; justify-content: center;
+}
+
+/* All leading app-bar groups use zero left padding, including icon-only groups. */
+.app-bar__leading:has(> :is(.app-bar__icon, .icon):first-child):not(:has(> :nth-child(n+2):not([hidden]))) { padding-left: 0; }
+
+.app-bar__leading:has(> :is(h1, strong):only-child) { padding-inline: 12px; }
+
+/* Toasts overlay the app-bar position at the top of the screen. */
+#toast, #notice {
+  top: var(--app-bar-offset);
+  bottom: auto;
+  z-index: 100;
+  pointer-events: none;
+  background: #fff;
+  color: #333;
+  border: 1px solid #e9e9e9;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 8%), 0 1px 4px rgb(0 0 0 / 3%);
+}
+.phone > #toast { position: absolute; }
+
+/* Publish validity is reflected by the floating check button. */
+.app-bar__actions > :is(button[form="write-form"], .app-bar__confirm):disabled {
+  color: #c7c7cc;
+  background: transparent;
+  cursor: default;
+}
+.app-bar__actions:has(> :is(button[form="write-form"], .app-bar__confirm):enabled) {
+  background: var(--ds-product-primary);
+}
+.app-bar__actions > :is(button[form="write-form"], .app-bar__confirm):enabled {
+  color: #fff;
+  background: var(--ds-product-primary);
+}
+.app-bar__actions:has(> :is(button[form="write-form"], .app-bar__confirm):enabled:active),
+.app-bar__actions > :is(button[form="write-form"], .app-bar__confirm):enabled:active {
+  background: var(--ds-primary-pressed);
+}
+
+/* Match the community publish icon, including disabled opacity. */
+.app-bar__confirm { opacity: 1; }
+.app-bar__confirm svg { width: 21px; height: 21px; }

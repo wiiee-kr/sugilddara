@@ -1,0 +1,31 @@
+/* Shared app typography. Font files are bundled for offline use. */
+@font-face {
+  font-family: 'Wanted Sans';
+  src: url('../assets/fonts/WantedSans-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Wanted Sans';
+  src: url('../assets/fonts/WantedSans-SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-app: 'Wanted Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-app);
+}
+
+button, input, textarea, select { font-family: inherit; }
+
+@font-face {
+  font-family: 'Wanted Sans';
+  src: url('../assets/fonts/WantedSans-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}

@@ -1,0 +1,2 @@
+/* App-wide maximum weight: semibold (600), including browser defaults. */
+h1, h2, h3, h4, h5, h6, strong, b, th { font-weight: 600; }

@@ -1,0 +1,186 @@
+@import url("../styles/design-system.css");
+@import url("../styles/activity-tabs.css");
+/* CTA uses the Product/Primary token; fallback supports the standalone UI. */
+:root {
+  --brand: var(--ds-product-primary);
+  --brand-pressed: var(--ds-primary-pressed);
+}
+.fab:active, .send:active:not(:disabled) { background: var(--brand-pressed); }
+
+/* Category-free metadata and profile-only comment composer. */
+.meta time { margin-left: auto; }
+/* One-row composer: 20px line height + 24px padding, up to three lines. */
+.composer { padding: 4px 8px; border-radius: 28px; }
+.composer-row { display: flex; align-items: center; gap: 4px; }
+.composer textarea {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  height: 44px;
+  min-height: 44px;
+  max-height: 84px;
+  padding: 12px 8px;
+  line-height: 20px;
+  overflow-y: hidden;
+}
+.composer .send {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  margin: 2px 0;
+}
+.composer .recipient { padding-top: 8px; }
+
+/* Post title followed by the author and timestamp row. */
+.detail h2 { margin-top: 0; }
+.detail > .meta { margin-top: 16px; }
+
+/* The shared layout stylesheet controls the app-bar/body gap. */
+.editor-title { padding-top: 0; }
+
+.toolbar .draft-status {
+  margin-left: auto;
+  color: var(--ds-grayscale-400);
+  font-size: var(--type-caption);
+  font-weight: 400;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+/* Post author uses the same text color as comment nicknames. */
+.detail .author {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.composer .send-icon { width: 20px; height: 20px; stroke-width: 1.8; }
+
+.post > .actions .post-time {
+  margin-left: auto;
+  color: var(--ds-grayscale-400);
+  font-size: var(--type-caption);
+  font-weight: 400;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+/* Left-aligned 32px profile thumbnails. */
+.profile-thumbnail {
+  display: block;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--soft);
+}
+.detail > .author-profile { display: flex; align-items: center; gap: 10px; }
+.author-info { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; min-width: 0; text-align: left; }
+.detail .author-info .author { max-width: none; font-size: var(--type-secondary); font-weight: 600; line-height: 18px; }
+.author-info time { margin-left: 0; font-size: var(--type-caption); line-height: 18px; }
+.comment { display: flex; align-items: flex-start; gap: 10px; }
+.comment > .profile-thumbnail { width: 32px; height: 32px; }
+.comment-content { flex: 1; min-width: 0; }
+.comment-top { height: 20px; }
+.comment-top .name { font-weight: 600; }
+.comment-body { line-height: 20px; }
+.reply-controls { padding-left: 82px; }
+
+/* Keep the app bar visible above detail content. */
+.topbar { position: sticky; top: 0; flex-shrink: 0; }
+
+/* App-bar titles sit directly next to the back button's touch target. */
+.topbar:has(> [data-action="back"] + h1) { gap: 0; }
+.topbar > [data-action="back"] + h1 { padding-left: 0; }
+
+/* App bar titles are navigation labels, not emphasized content. */
+/* App-bar title typography is shared in layout.css. */
+
+.post .post-link h2,
+.post h2,
+.detail > h2,
+.editor-title,
+.activity-post-title { font-weight: 600; }
+
+/* CTA labels: semibold. */
+.primary, .text-action { font-weight: 600; }
+
+/* Activity segmented navigation sits directly below the app bar. */
+.topbar:has(+ .activity-tabs) { border-bottom: 0; margin-bottom: 0; }
+.detail > .body-copy { margin-top: 16px; }
+
+/* Solid pencil for the write floating action button. */
+.fab .write-solid { fill: currentColor; stroke: none; }
+
+/* My comments: comment first, source post second, timestamp third. */
+.activity-comment { padding: 20px 16px; }
+.activity-comment__link { display: block; }
+.post.activity-comment .activity-comment__body {
+  margin: 7px 0 0; color: var(--ink); font-size: var(--type-body); line-height: 1.35;
+  font-weight: 600; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;
+}
+.activity-comment__context { display: flex; align-items: baseline; gap: 6px; margin-top: 4px; color: var(--ink); font-size: var(--type-body); line-height: 1.45; font-weight: 400; }
+.activity-comment__label { flex-shrink: 0; }
+.activity-comment__post-title { min-width: 0; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; white-space: pre-line; overflow-wrap: anywhere; }
+.activity-comment__time { display: block; margin-top: 6px; color: var(--ds-grayscale-400); font-size: var(--type-caption); line-height: 16px; font-weight: 400; }
+
+/* Block management uses the shared outlined tertiary M control. */
+.blocked-list { margin: 0; padding: 0; list-style: none; }
+.blocked-list .blocked-row { gap: 16px; min-height: 72px; padding: 16px; border-bottom: 1px solid var(--soft); }
+.blocked-user { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.blocked-user .profile-thumbnail { width: 40px; height: 40px; flex: 0 0 40px; border-radius: 50%; object-fit: cover; }
+.blocked-name { font-size: var(--type-label); line-height: 20px; font-weight: 500; overflow-wrap: anywhere; }
+.unblock-button { flex-shrink: 0; min-height: var(--button-size-m-height); padding: 4px 8px; border: var(--button-border-width-default) solid var(--button-outlined-tertiary-border-default); border-radius: var(--button-size-m-radius); color: var(--button-outlined-tertiary-label-default); background: white; font-size: var(--typography-label-m-size); font-weight: var(--typography-label-m-weight); line-height: var(--typography-label-m-line-height); }
+.unblock-button:active { background: var(--soft); }
+
+/* Slightly soften body previews on the community root list. */
+#list-view .excerpt { color: #3a3a3a; }
+
+/* More menus use full-width, flat list rows. */
+.sheet .menu-action {
+  display: block;
+  min-height: 52px;
+  margin: 0;
+  padding: 14px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: left;
+  font-size: var(--type-body);
+  font-weight: 400;
+  line-height: 24px;
+}
+.sheet .menu-action:active { background: var(--soft); }
+
+.story-banner {
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  width: calc(100% - 32px);
+  min-height: 72px;
+  margin: 0 16px 16px;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 12px;
+  text-align: left;
+  color: #173f73;
+  background: #e6f5f2 url('../assets/community-travel-luggage.png') right 12px center / auto 62px no-repeat;
+  padding-right: 94px;
+}
+@font-face {
+  font-family: 'Geekble Malang';
+  src: local('GeekbleMalang2OTF'), url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/GeekbleMalang2WOFF2.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+.story-banner strong {
+  font-family: 'Geekble Malang', sans-serif;
+  font-size: var(--typography-title-l-size, 18px);
+  line-height: 24px;
+  font-weight: 400;
+}
+.story-banner span { color: #365875; font-size: var(--type-caption); line-height: 18px; }
+.story-banner:active { filter: brightness(.97); }
+.story-list-empty { padding: 40px 16px 24px; text-align: center; }

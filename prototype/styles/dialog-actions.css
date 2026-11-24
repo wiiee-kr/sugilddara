@@ -1,0 +1,27 @@
+/* Popup CTAs use solid primary, tertiary stroke, or text-only cancel. */
+dialog .popup-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+dialog .popup-actions--pair { flex-direction: row; }
+dialog .popup-actions > button {
+  flex: 1 1 0; width: 100%; min-width: 0; min-height: 48px; height: auto;
+  margin: 0; padding: 12px 16px; border-radius: 10px;
+  font-size: var(--type-body); font-weight: 500; line-height: 22px; text-align: center;
+}
+dialog .popup-actions--pair > button { font-size: var(--type-label); }
+dialog button.popup-primary { background: var(--ds-product-primary); border: 1px solid var(--ds-product-primary); color: #fff; }
+dialog button.popup-tertiary { background: #fff; border: 1px solid var(--button-outlined-tertiary-border-default, #d9d9d9); color: var(--button-outlined-tertiary-label-default, #262626); }
+dialog button.popup-primary:disabled, dialog button.popup-tertiary:disabled { opacity: .4; cursor: default; }
+dialog > p:has(~ .popup-actions) { margin-bottom: 0; }
+/* Profile editing keeps its body controls and pinned submit button. */
+#profile-form .save-button.popup-primary { background: var(--ds-product-primary); color: #fff; }
+
+dialog .popup-actions > button[hidden] { display: none; }
+dialog form:has(+ .popup-actions) textarea:last-child { margin-bottom: 0; }
+
+dialog button.popup-cancel-text,
+dialog button.popup-cancel-text:hover,
+dialog button.popup-cancel-text:active {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: var(--button-outlined-tertiary-label-default, #262626);
+}

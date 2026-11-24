@@ -1,0 +1,5 @@
+/* Shared focus appearance across all app screens. */
+:focus,
+:focus-visible {
+  outline: none;
+}

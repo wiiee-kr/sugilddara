@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>공항 이용 안내 · 수길따라</title>
+<link rel="stylesheet" href="styles/fonts.css">
+<link rel="stylesheet" href="styles/design-system.css">
+<link rel="stylesheet" href="styles/flights.css?v=calendar-close-3">
+<link rel="stylesheet" href="styles/layout.css">
+<link rel="stylesheet" href="styles/flight-guide.css?v=order-sheet">
+<link rel="stylesheet" href="styles/airport-order.css">
+</head>
+<body>
+<header class="app-bar">
+  <div class="app-bar__leading">
+    <a class="app-bar__icon" id="back" href="flights.html" aria-label="뒤로가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg></a>
+    <h1>공항 이용 안내</h1>
+  </div>
+</header>
+<main class="guide">
+<div class="ticket"><strong id="ticket-title"></strong><span id="ticket-date"></span></div>
+<div class="progress" id="progress"></div>
+<h1 id="instruction" tabindex="-1"></h1>
+<p id="detail"></p>
+<section class="location" aria-labelledby="example">
+<h2 id="example">공항 안내 예시</h2>
+<dl id="facts"></dl>
+</section>
+<p class="notice">터미널과 배정 번호는 예시예요. 여행 당일에는 공항 전광판과 항공사 안내를 확인하세요.</p>
+<a id="official" href="https://www.airport.kr/">인천공항 공식 안내 보기 ↗</a>
+<footer>
+  <button type="button" id="open-order" aria-haspopup="dialog" aria-controls="order-sheet">순서</button>
+  <a id="next"></a>
+</footer>
+</main>
+<dialog id="order-sheet" class="order-section" aria-labelledby="order-title">
+  <div class="sheet-heading"><h2 id="order-title">공항 이용 순서</h2>
+    <form method="dialog"><button autofocus>닫기</button></form>
+  </div>
+  <ol id="airport-order"></ol>
+</dialog>
+<script src="scripts/airport-order.js"></script>
+<script src="scripts/flight-guide.js?v=ticket-date"></script>
+</body>
+</html>

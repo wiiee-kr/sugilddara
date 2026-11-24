@@ -1,0 +1,115 @@
+/* 수길따라 · Figma 2006:1345 */
+/* 수길따라 공통 글자 크기. 기본 브라우저 설정(16px)에서 14 / 15 / 16 / 18 / 20 / 24px. */
+:root {
+  --type-caption: 0.875rem;
+  --type-secondary: 0.9375rem;
+  --type-label: 1rem;
+  --type-body: 1.125rem;
+  --type-heading: 1.25rem;
+  --type-title: 1.5rem;
+  --ds-product-primary: #0080FF;
+  --ds-primary-hover: #0071E0;
+  --ds-primary-pressed: #0062C2;
+}
+
+/* Verified Figma source: kyRVfsumtaWbm4e96wrJB0, page 4:37.
+   Button/Outlined/Tertiary M Default: 4:816; guidelines: 4:906. */
+:root {
+  --radius-control-m: 10px;
+  --button-size-m-radius: var(--radius-control-m);
+  --button-size-m-height: 40px;
+  --button-solid-primary-height: 48px;
+  --button-size-m-padding-x: 16px;
+  --button-gap: 4px;
+  --button-border-width-default: 1px;
+  --button-outlined-tertiary-border-default: #d9d9d9;
+  --button-outlined-tertiary-label-default: #262626;
+  /* Figma Label S (4:2665). */
+  --typography-label-s-size: var(--type-caption);
+  --typography-label-s-line-height: 18px;
+  --typography-label-s-weight: 500;
+  --typography-label-s-letter-spacing: 0.1px;
+  --typography-label-m-size: var(--type-label);
+  --typography-label-m-weight: 500;
+  --typography-label-m-line-height: 20px;
+}
+
+/* Figma Textfield Default 4:954 / Filled 4:968. */
+:root {
+  --input-field-border-width: 1px;
+  --input-field-border-default: #d9d9d9;
+  --input-field-container-radius: 12px;
+  --input-field-container-padding: 12px;
+  --input-field-text-padding-x: 4px;
+  --input-field-label-default: #434343;
+  --input-field-text-value: #434343;
+  --input-field-text-placeholder: #c3c3c3;
+  --input-field-text-size: var(--type-body);
+  --input-field-text-line-height: 26px;
+}
+
+/* Figma Checkbox 4:1228: original 24px Unselected / Selected assets. */
+:root {
+  --checkbox-size: 24px;
+  --checkbox-unselected-image: url('../assets/icons/checkbox-unselected.svg');
+  --checkbox-selected-image: url('../assets/icons/checkbox-selected.svg');
+}
+
+/* Layout */
+:root {
+  --section-gap: 40px;
+  --section-content-gap: 12px;
+  --course-thumbnail-size: 100px;
+}
+
+/* Figma Typography/Title/L (4:2637). */
+:root {
+  --typography-title-l-size: var(--type-heading);
+  --typography-title-l-line-height: 28px;
+  --typography-title-l-weight: 600;
+  --typography-title-l-letter-spacing: 0;
+}
+
+/* Figma Searchfield 4:1100, Default and Filled. */
+.ds-search-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--input-field-container-padding);
+  border-radius: var(--input-field-container-radius);
+  background: var(--ds-grayscale-50, #f5f5f5);
+}
+.ds-search-field::before {
+  content: "";
+  flex: 0 0 24px;
+  height: 24px;
+  background: url('../assets/icons/search-field-search.svg') center no-repeat;
+}
+.ds-search-field input[type="search"] {
+  appearance: none;
+  flex: 1;
+  min-width: 0;
+  height: 26px;
+  margin: 0;
+  padding: 0 var(--input-field-text-padding-x);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--input-field-text-value);
+  font: 400 var(--input-field-text-size)/1.5 var(--font-app);
+  letter-spacing: 0;
+}
+.ds-search-field input::placeholder { color: var(--input-field-text-placeholder); opacity: 1; }
+.ds-search-field input::-webkit-search-cancel-button { display: none; }
+.ds-search-field .ds-search-clear {
+  flex: 0 0 20px;
+  min-height: 0;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  background: transparent url('../assets/icons/search-field-clear.svg') center no-repeat;
+  cursor: pointer;
+}
+.ds-search-field input:placeholder-shown + .ds-search-clear { display: none; }

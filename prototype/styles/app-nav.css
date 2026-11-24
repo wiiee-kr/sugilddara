@@ -1,0 +1,32 @@
+.app-nav {
+  position: fixed;
+  z-index: 5;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: min(calc(100% - 32px), 448px);
+  height: 56px;
+  border-radius: 28px;
+  background: white;
+  box-shadow: 0 2px 14px rgb(0 0 0 / 10%);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.app-nav a {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 2px;
+  font-size: var(--type-caption);
+  line-height: 1.25;
+  color: #757575;
+  text-decoration: none;
+}
+.app-nav svg { width: 24px; height: 24px; fill: #c3c3c3; stroke: none; }
+.app-nav a[aria-current] { color: var(--ds-product-primary); font-weight: 600; }
+.app-nav a[aria-current] svg { fill: currentColor; }
+.app-nav[hidden] { display: none; }
+.phone > .app-nav { position: absolute; }
+.phone:has(.app-nav) .fab { bottom: calc(84px + env(safe-area-inset-bottom)); }
+.phone:has(.app-nav) .list-bottom { height: calc(152px + env(safe-area-inset-bottom)); }

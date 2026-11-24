@@ -1,0 +1,74 @@
+@import url('./design-system.css');
+@import url('./activity-tabs.css');
+
+.my-page { max-width: 480px; margin: 0 auto; }
+.page-bar { display: flex; align-items: center; gap: 0; height: calc(var(--app-bar-height, 48px) + env(safe-area-inset-top)); min-height: calc(var(--app-bar-height, 48px) + env(safe-area-inset-top)); padding: env(safe-area-inset-top) 16px 0; }
+h1, h2, p { margin: 0; }
+/* App-bar title typography is shared in layout.css. */
+svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.back-button { display: grid; align-items: center; justify-items: center; width: 44px; height: 44px; color: inherit; border-radius: 50%; }
+button, input { font: inherit; }
+button { cursor: pointer; color: inherit; }
+.profile { display: flex; align-items: center; flex-wrap: wrap; column-gap: 16px; row-gap: 22px; padding: 24px 24px 32px; }
+.profile-image { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
+.profile-copy { flex: 1; min-width: 0; }
+.profile-name { font-size: 18px; font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
+.edit-button {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: var(--button-size-m-height); min-height: var(--button-size-m-height);
+  padding: 0 var(--button-size-m-padding-x); gap: var(--button-gap);
+  border: var(--button-border-width-default) solid var(--button-outlined-tertiary-border-default);
+  background: transparent; color: var(--button-outlined-tertiary-label-default);
+  border-radius: var(--button-size-m-radius);
+  font-size: var(--typography-label-m-size); font-weight: var(--typography-label-m-weight);
+  line-height: var(--typography-label-m-line-height); letter-spacing: 0;
+}
+.menu-section { border-top: 1px solid #f6f6f6; padding: 14px 24px; }
+.menu-item { display: flex; align-items: center; gap: 8px; min-height: 58px; text-decoration: none; color: #191919; font-size: 15px; font-weight: 400; border-radius: 6px; }
+.menu-item > svg { color: #555; }
+.app-version__value { margin-left: auto; color: #888; font-size: 13px; font-weight: 400; line-height: 20px; }
+.back-button:hover { background: #f7f7f7; }
+.page-footer { padding: 30px 24px max(28px, env(safe-area-inset-bottom)); color: #888; font-size: 11px; line-height: 1.8; }
+.page-footer p:first-child { color: #555; font-size: 13px; margin-bottom: 5px; }
+dialog { width: calc(100% - 40px); max-width: 380px; border: 0; border-radius: 16px; padding: 24px; color: #191919; }
+dialog::backdrop { background: #0006; }
+dialog h2 { font-size: 20px; margin-bottom: 26px; }
+dialog label { display: block; font-size: 13px; margin-bottom: 10px; }
+dialog input { width: 100%; border: 1px solid #ccc; border-radius: 8px; padding: 12px; font-size: 16px; }
+dialog p { font-size: 14px; color: #777; line-height: 1.7; margin-top: 10px; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 24px; }
+.dialog-actions button { min-height: 44px; padding: 10px 20px; border: 0; background: #f4f4f4; border-radius: 8px; }
+.dialog-actions .save-button { background: var(--ds-product-primary, #2454d6); color: #fff; }
+.dialog-actions .save-button:active { background: color-mix(in srgb, var(--ds-product-primary, #2454d6) 85%, black); }
+.notice { position: fixed; bottom: max(24px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100% - 40px); background: #222; color: #fff; border-radius: 10px; padding: 14px 18px; font-size: 13px; line-height: 1.6; z-index: 2; }
+
+.profile-photo-trigger { border: 0; padding: 0; background: none; border-radius: 50%; display: block; }
+.profile-photo-trigger img { display: block; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+#profile-dialog { position: fixed; inset: auto 0 0; margin: 0 auto; width: 100%; max-width: 480px; height: min(90dvh, 820px); max-height: 90dvh; padding: 0; border-radius: 24px 24px 0 0; border: 0; }
+#profile-dialog::backdrop { background: rgb(0 0 0 / 60%); }
+#profile-form { position: relative; display: flex; flex-direction: column; min-height: 100%; padding: 56px 24px max(24px, env(safe-area-inset-bottom)); box-sizing: border-box; }
+.sheet-close { position: absolute; top: 8px; right: 12px; width: 40px; height: 40px; border: 0; background: none; font-size: 26px; color: #7b7b7b; }
+.photo-edit { align-self: center; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 0; border: 0; background: none; font-size: 14px; font-weight: 500; }
+.photo-edit img { width: 96px; height: 96px; object-fit: cover; border-radius: 50%; }
+.nickname-field { margin-top: 48px; }
+#profile-form label { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+#profile-form input[type=text] { min-height: 48px; border: 1px solid #c3c3c3; border-radius: 10px; padding: 12px; }
+#profile-form input[aria-invalid=true] { border-color: #d92d20; }
+#profile-form .field-error { color: #d92d20; font-size: 12px; line-height: 1.5; margin-top: 8px; }
+#profile-form .save-button { margin-top: auto; min-height: 48px; flex-shrink: 0; border: 0; border-radius: 10px; background: var(--ds-product-primary, #2454d6); color: white; font-size: 16px; font-weight: 500; }
+#profile-form .nickname-field { margin-bottom: 32px; }
+#profile-form .save-button:disabled { opacity: .5; cursor: wait; }
+body:has(#profile-dialog[open]) { overflow: hidden; }
+
+.menu-item > .menu-icon { display: block; width: 24px; height: 24px; flex: 0 0 24px; }
+
+
+* { box-sizing: border-box; }
+body { margin: 0; color: #191919; background: white; }
+.my-page { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
+.profile-name { font-size: var(--type-heading); }
+.menu-item { font-size: var(--type-body); }
+.page-footer, .page-footer p:first-child { font-size: var(--type-caption); }
+.bookmark-empty { margin: 60px 16px; text-align: center; color: #646464; font-size: var(--type-label); }
+.bookmark-empty img { display: block; margin: 0 auto 16px; }

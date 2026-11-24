@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>항공편 · 수길따라</title>
+<link rel="stylesheet" href="styles/fonts.css">
+<link rel="stylesheet" href="styles/design-system.css">
+<link rel="stylesheet" href="styles/app-nav.css">
+<link rel="stylesheet" href="styles/flights.css?v=calendar-close-3">
+<link rel="stylesheet" href="styles/airport-order.css">
+</head><body>
+<main>
+<form>
+<section>
+<h1>내 항공편 찾기</h1>
+<p>인천공항에서 출발하거나 도착하는 항공편만 조회할 수 있어요.</p>
+<div class="choices directions" role="group" aria-label="항공편 방향">
+<label><input type="radio" name="direction" value="depart" checked><span>인천에서 출발</span></label>
+<label><input type="radio" name="direction" value="arrive"><span>인천에 도착</span></label>
+</div>
+</section>
+<section>
+<h2><label for="flight">편명</label></h2>
+<p id="hint">예매 내역에 적힌 편명을 KE703처럼 입력해 주세요.</p>
+<input id="flight" aria-describedby="hint" placeholder="예: KE703" required autocapitalize="characters" autocomplete="off" spellcheck="false">
+</section>
+<section>
+<h2 id="date-title">출발일</h2>
+<div class="choices" role="group" aria-labelledby="date-title">
+<label><input type="radio" name="day" value="today" checked><span>오늘</span></label>
+<label><input type="radio" name="day" value="tomorrow"><span>내일</span></label>
+<input type="radio" name="day" value="custom" hidden>
+<button id="choose-date" type="button" aria-haspopup="dialog" aria-controls="calendar" aria-pressed="false">날짜 선택</button>
+</div>
+<input id="custom-date" type="hidden" name="date">
+</section>
+<button type="submit">항공편 조회하기</button>
+<p id="status" role="status"></p>
+</form>
+<a class="bus" href="https://www.airport.kr/ap_ko/976/subview.do">공항버스 안내 보기 ↗</a>
+<section class="order-section" aria-labelledby="order-title">
+<h2 id="order-title">공항 이용 순서</h2>
+<ol id="airport-order"></ol>
+</section>
+</main>
+<nav class="app-nav" aria-label="주요 메뉴">
+<a href="index.html#home"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M2 5 8 2l8 3 6-3v17l-6 3-8-3-6 3zm5 0v12l2 1V5zm8 2v12l2 1V7z"/></svg>홈</a>
+<a href="packing.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M8 6V5a4 4 0 0 1 8 0v1a4 4 0 0 1 4 4v9a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-9a4 4 0 0 1 4-4Zm2 0h4V5a2 2 0 0 0-4 0v1Zm-2 7a1 1 0 0 0 0 2h8a1 1 0 0 0 0-2H8Z"/></svg>준비물</a>
+<a href="flights.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 9 3 14v2l7-2v5l-3 2v1l5-1 5 1v-1l-3-2v-5l7 2v-2l-7-5V5q0-4-2-4t-2 4z"/></svg>항공편</a>
+<a href="community.html#/"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3H5Zm1 4a1 1 0 0 0 0 2h12a1 1 0 0 0 0-2H6Zm0 4a1 1 0 0 0 0 2h12a1 1 0 0 0 0-2H6Zm0 4a1 1 0 0 0 0 2h7a1 1 0 0 0 0-2H6Z"/></svg>커뮤니티</a>
+<a href="mypage.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4.5"/><path d="M3 21a9 9 0 0 1 18 0z"/></svg>마이</a>
+</nav>
+<dialog id="calendar" aria-labelledby="calendar-title">
+<h2 id="calendar-title">날짜 선택</h2>
+<div class="month-nav"><button type="button" id="prev-month" aria-label="이전 달">‹</button><strong id="month" aria-live="polite"></strong><button type="button" id="next-month" aria-label="다음 달">›</button></div>
+<div class="weekdays" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+<div id="days"></div>
+<button type="button" id="close-calendar">닫기</button>
+</dialog>
+<script src="scripts/airport-order.js"></script>
+<script src="scripts/flights.js?v=order-1"></script>
+</body></html>

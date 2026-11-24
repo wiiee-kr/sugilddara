@@ -1,0 +1,60 @@
+/* Empty-state icons sit 56px below the app bar or preceding element. */
+:root { --empty-state-top-gap: 56px; }
+.topbar + .view.edge-state { padding: var(--empty-state-top-gap) 16px 24px; text-align: center; }
+.edge-state__icon { width: 120px; margin: 0 auto 20px; background-image: url('../assets/empty-state-icons.png'); background-repeat: no-repeat; }
+.travel-empty-image {
+  display: block;
+  width: 120px;
+  height: 92px;
+  object-fit: cover;
+  margin: 0 auto 20px;
+}
+.edge-state__icon--network { height: 100px; background-size: 407.25px 135.75px; background-position: -29px -22px; }
+.edge-state__icon--plane { height: 71px; background-image: url('../assets/travel-plane.svg'); background-size: contain; background-position: center; }
+.edge-state__title { margin: 0; font-size: var(--type-heading); line-height: 26px; font-weight: 600; color: var(--ink); }
+.edge-state__description { margin: 0; font-size: var(--type-label); line-height: 20px; font-weight: 400; color: var(--secondary); }
+.edge-state__title + .edge-state__description { margin-top: 12px; }
+.tertiary-stroke { width: 100%; min-height: 48px; padding: 12px 16px; border: 1px solid var(--border); border-radius: 12px; background: white; color: var(--ink); font-size: var(--cta-label-size, 16px); line-height: 22px; font-weight: 600; }
+.tertiary-stroke:active { background: var(--soft); }
+.edge-state__retry { margin-top: 20px; }
+
+.edge-state__icon--community { height: 88px; background-image: url('../assets/community-empty.png'); background-size: contain; background-position: center; }
+
+/* Compact empty state inside the post's comments section. */
+.comments-empty { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: var(--empty-state-top-gap) 16px 32px; text-align: center; }
+.comments-empty__icon { display: block; width: 48px; height: 42px; flex: none; }
+.comments-empty p { margin: 0; color: var(--secondary); font-size: var(--type-label); font-weight: 400; line-height: 20px; }
+
+/* Smaller airplane illustration for all three My Activity empty tabs. */
+.activity-empty { padding: var(--empty-state-top-gap) 16px 32px; text-align: center; }
+.activity-empty .activity-empty__icon {
+  width: 64px;
+  height: 38px;
+  margin-bottom: 16px;
+  background-size: contain;
+  background-position: center;
+}
+
+/* Default illustration for empty data, unless the screen has a custom one. */
+.data-empty { padding: var(--empty-state-top-gap) 16px 32px; text-align: center; }
+.data-empty .edge-state__description { color: var(--secondary, #777); }
+.topbar + .view:has(> .data-empty:first-child),
+.page-bar + main:has(> .data-empty:first-child) { padding-top: 0; }
+.section-head:has(+ .data-empty) { margin-bottom: 0; }
+.view:has(> #search-results > .data-empty) > .searchbox { padding-bottom: 0; }
+
+/* Scroll content behind the split floating bar, without an opaque header strip. */
+.phone .topbar:has(+ .view) { pointer-events: none; }
+.phone .topbar :is(.app-bar__leading, .app-bar__actions) { pointer-events: auto; }
+.phone .topbar + .view {
+  margin-top: calc(-1 * (var(--app-bar-height) + var(--app-bar-offset)));
+  padding-top: calc(var(--app-bar-height) + var(--app-bar-offset) + var(--app-body-gap));
+}
+.phone .topbar + .view.edge-state {
+  padding-top: calc(var(--app-bar-height) + var(--app-bar-offset) + var(--empty-state-top-gap));
+}
+.phone .topbar + .view:has(> .data-empty:first-child) {
+  padding-top: calc(var(--app-bar-height) + var(--app-bar-offset));
+}
+
+.data-empty.search-prompt { padding-top: 32px; }
