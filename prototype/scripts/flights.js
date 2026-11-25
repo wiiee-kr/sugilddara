@@ -89,12 +89,6 @@ form.addEventListener('submit', event => {
     direction: form.elements.direction.value,
     date: selectedDay === 'custom' ? dateInput.value : localDate
   });
-  location.assign('flight-guide.html?' + query);
+  const guide = query.get('direction') === 'arrive' ? 'flight-guide.html' : 'departure-preview.html';
+  location.assign(guide + '?' + query);
 });
-
-function updateAirportOrder() {
-  showAirportOrder(form.elements.direction.value);
-}
-form.querySelector('.directions').addEventListener('change', updateAirportOrder);
-window.addEventListener('pageshow', updateAirportOrder);
-updateAirportOrder();

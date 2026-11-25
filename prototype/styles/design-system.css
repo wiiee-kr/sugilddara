@@ -113,3 +113,16 @@
   cursor: pointer;
 }
 .ds-search-field input:placeholder-shown + .ds-search-clear { display: none; }
+
+.flight-page { --section-gap: 36px; }
+
+.ds-example-image { position: relative; }
+.ds-example-image__credit {
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  padding: 0;
+  background: transparent;
+  color: #566373;
+  font-size: 14px;
+}

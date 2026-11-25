@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>공항 이용 안내 · 수길따라</title>
 <link rel="stylesheet" href="styles/fonts.css">
-<link rel="stylesheet" href="styles/design-system.css">
+<link rel="stylesheet" href="styles/design-system.css?v=example-credit">
 <link rel="stylesheet" href="styles/flights.css?v=calendar-close-3">
 <link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/flight-guide.css?v=step-title-8">
-<link rel="stylesheet" href="styles/airport-order.css">
+<link rel="stylesheet" href="styles/flight-guide.css?v=arrival-guide">
+<link rel="stylesheet" href="styles/flight-steps.css">
 </head>
-<body>
+<body class="flight-page">
 <header class="app-bar">
   <div class="app-bar__leading">
     <a class="app-bar__icon" id="back" href="flights.html" aria-label="뒤로가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg></a>
@@ -20,26 +20,23 @@
 </header>
 <main class="guide">
 <div class="ticket"><strong id="ticket-title"></strong><span id="ticket-date"></span></div>
-<div class="progress" id="progress"></div>
+<nav class="step-nav" id="step-nav" aria-label="공항 안내 단계"></nav>
 <h1 id="instruction" tabindex="-1"></h1>
 <p id="detail"></p>
 <section class="location" aria-label="공항 위치 안내">
 <dl id="facts"></dl>
 </section>
-<p class="notice">터미널과 배정 번호는 예시예요. 여행 당일에는 공항 전광판과 항공사 안내를 확인하세요.</p>
-<a id="official" href="https://www.airport.kr/">인천공항 공식 안내 보기 ↗</a>
+<figure id="arrival-photo" hidden>
+  <div class="ds-example-image">
+    <img width="760" height="334" alt="">
+    <small class="ds-example-image__credit">AI생성 예시이미지</small>
+  </div>
+  <figcaption></figcaption>
+</figure>
 <footer>
-  <button type="button" id="open-order" aria-haspopup="dialog" aria-controls="order-sheet">순서</button>
   <a id="next"></a>
 </footer>
 </main>
-<dialog id="order-sheet" class="order-section" aria-labelledby="order-title">
-  <div class="sheet-heading"><h2 id="order-title">공항 이용 순서</h2>
-    <form method="dialog"><button autofocus>닫기</button></form>
-  </div>
-  <ol id="airport-order"></ol>
-</dialog>
-<script src="scripts/airport-order.js"></script>
-<script src="scripts/flight-guide.js?v=check-in-padding"></script>
+<script src="scripts/flight-guide.js?v=arrival-terminal"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@ section + section { margin-top: var(--section-gap); }
 .choices input:focus-visible + span { outline: 2px solid #123d73; outline-offset: 2px; }
 #flight { min-width: 0; max-width: 100%; margin-top: 12px; width: 100%; border: 1px solid #bfc7d0; border-radius: var(--input-field-container-radius); padding: 12px 16px; font-size: var(--type-body); min-height: 50px; background: white; color: inherit; }
 button { width: 100%; margin-top: 28px; min-height: var(--button-solid-primary-height); padding: 10px; border: none; border-radius: 10px; background: var(--ds-product-primary); color: white; font-size: var(--type-body); font-weight: 600; cursor: pointer; }
-.bus { display: block; width: fit-content; margin: 10px auto 0; padding: 10px; color: #205e98; font-weight: 500; }
+.bus:not([hidden]) { display: block; width: fit-content; margin: 10px auto 0; padding: 10px; color: #205e98; font-weight: 500; }
 #status:empty { display: none; }
 #calendar { width: min(380px, calc(100% - 32px)); max-height: 90svh; padding: 20px; border: none; border-radius: 16px; color: inherit; }
 #calendar::backdrop { background: rgb(0 0 0 / 40%); }

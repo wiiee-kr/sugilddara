@@ -9,3 +9,26 @@
 .order-section details p { margin: 0; padding: 0 12px 14px; }
 .current-order .order-number { color: white; background: #0068be; }
 .current-order small { color: #005daa; font-size: var(--type-caption); }
+
+#order-sheet { position: fixed; inset: auto 0 0; width: min(100%, 480px); max-width: 100%; max-height: 82vh; max-height: 82dvh; margin: 0 auto; padding: 12px 20px calc(20px + env(safe-area-inset-bottom)); border: 0; border-radius: 20px 20px 0 0; overflow-y: auto; overscroll-behavior: contain; color: inherit; }
+#order-sheet::backdrop { background: rgb(0 0 0 / 35%); }
+#order-sheet[open] { display: flex; flex-direction: column; overflow: hidden; }
+#order-sheet h2 { margin: 0; }
+#airport-order { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+#order-sheet form { flex: none; margin: 12px 0 0; }
+#order-sheet form button {
+  width: 100%;
+  min-height: var(--button-size-m-height);
+  margin: 0;
+  padding: 8px var(--button-size-m-padding-x);
+  border: var(--button-border-width-default) solid var(--button-outlined-tertiary-border-default);
+  border-radius: var(--button-size-m-radius);
+  background: transparent;
+  color: var(--button-outlined-tertiary-label-default);
+  font: inherit;
+  font-size: var(--typography-label-m-size);
+  font-weight: var(--typography-label-m-weight);
+}
+
+#airport-order .ds-example-image { margin: 0 12px 14px; }
+#airport-order .ds-example-image img { display: block; width: 100%; height: auto; border-radius: 12px; }

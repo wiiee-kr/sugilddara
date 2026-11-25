@@ -4,11 +4,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>항공편 · 수길따라</title>
 <link rel="stylesheet" href="styles/fonts.css">
-<link rel="stylesheet" href="styles/design-system.css">
+<link rel="stylesheet" href="styles/design-system.css?v=flight-gap36">
 <link rel="stylesheet" href="styles/app-nav.css">
-<link rel="stylesheet" href="styles/flights.css?v=calendar-focus-1">
-<link rel="stylesheet" href="styles/airport-order.css">
-</head><body>
+<link rel="stylesheet" href="styles/flights.css?v=bus-hidden">
+</head><body class="flight-page">
 <main>
 <form>
 <section>
@@ -37,11 +36,7 @@
 <button type="submit">항공편 조회하기</button>
 <p id="status" role="status"></p>
 </form>
-<a class="bus" href="https://www.airport.kr/ap_ko/976/subview.do">공항버스 안내 보기 ↗</a>
-<section class="order-section" aria-labelledby="order-title">
-<h2 id="order-title">공항 이용 순서</h2>
-<ol id="airport-order"></ol>
-</section>
+<a hidden class="bus" href="https://www.airport.kr/ap_ko/976/subview.do">공항버스 안내 보기 ↗</a>
 </main>
 <nav class="app-nav" aria-label="주요 메뉴">
 <a href="index.html#home"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M2 5 8 2l8 3 6-3v17l-6 3-8-3-6 3zm5 0v12l2 1V5zm8 2v12l2 1V7z"/></svg>홈</a>
@@ -57,6 +52,5 @@
 <div id="days"></div>
 <button type="button" id="close-calendar">닫기</button>
 </dialog>
-<script src="scripts/airport-order.js"></script>
-<script src="scripts/flights.js?v=calendar-focus-1"></script>
+<script src="scripts/flights.js?v=order-after-search"></script>
 </body></html>
