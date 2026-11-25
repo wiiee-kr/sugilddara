@@ -1,7 +1,7 @@
 * { box-sizing: border-box; }
 body { margin: auto; max-width: 480px; background: #fff; color: #20242b; font-size: var(--type-body); line-height: 1.5; word-break: keep-all; }
 html { background: #f4f5f7; }
-main { min-height: 100svh; padding: calc(28px + env(safe-area-inset-top)) 20px calc(104px + env(safe-area-inset-bottom)); }
+main { min-height: 100svh; padding: calc(var(--app-body-gap) + env(safe-area-inset-top)) 20px calc(104px + env(safe-area-inset-bottom)); }
 h1, h2, p { margin: 0; }
 h1 { font-size: var(--type-title); }
 h2 { font-size: var(--type-heading); }
@@ -12,7 +12,6 @@ section + section { margin-top: var(--section-gap); }
 .choices input { position: absolute; opacity: 0; }
 .choices span { display: grid; place-items: center; text-align: center; min-height: 48px; height: 100%; padding: 9px 4px; border: 1px solid #cbd0d5; border-radius: 10px; cursor: pointer; }
 .choices input:checked + span { background: #edf5ff; border-color: var(--ds-product-primary); color: #005fbf; font-weight: 600; }
-.choices input:focus-visible + span { outline: 2px solid #123d73; outline-offset: 2px; }
 #flight { min-width: 0; max-width: 100%; margin-top: 12px; width: 100%; border: 1px solid #bfc7d0; border-radius: var(--input-field-container-radius); padding: 12px 16px; font-size: var(--type-body); min-height: 50px; background: white; color: inherit; }
 button { width: 100%; margin-top: 28px; min-height: var(--button-solid-primary-height); padding: 10px; border: none; border-radius: 10px; background: var(--ds-product-primary); color: white; font-size: var(--type-body); font-weight: 600; cursor: pointer; }
 .bus:not([hidden]) { display: block; width: fit-content; margin: 10px auto 0; padding: 10px; color: #205e98; font-weight: 500; }

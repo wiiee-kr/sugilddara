@@ -88,7 +88,7 @@ function renderGuide() {
     figure.querySelector('figcaption').textContent = caption;
   }
   title.focus({preventScroll: true});
-  window.scrollTo(0, 0);
+  document.querySelector('main').scrollTo(0, 0);
 }
 
 window.addEventListener('hashchange', renderGuide);

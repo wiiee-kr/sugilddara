@@ -5,20 +5,31 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#ffffff">
-  <title>수길따라 · 마이페이지</title>
+  <link rel="icon" type="image/png" href="assets/icons/app-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/app-180.png">
+<link rel="manifest" href="app.webmanifest">
+<title>수길따라 · 마이페이지</title>
   <link rel="stylesheet" href="styles/fonts.css">
-  <link rel="stylesheet" href="styles/mypage.css">
+  <link rel="stylesheet" href="styles/mypage.css?v=destination-list">
+  <link rel="stylesheet" href="styles/destination-list.css">
   
-  <script src="scripts/my-settings.js" defer></script>
-<link rel="stylesheet" href="styles/focus.css">
+  <script src="scripts/travel-series.js" defer></script>
+  <script src="scripts/travel-countries.js?v=country-bookmarks" defer></script>
+  <script src="scripts/destination-row.js" defer></script>
+  <script src="scripts/my-settings.js?v=destination-list" defer></script>
+<link rel="stylesheet" href="styles/focus.css?v=keyboard-navigation">
+<script src="scripts/focus.js" defer></script>
 <link rel="stylesheet" href="styles/app-nav.css">
 
 <link rel="stylesheet" href="styles/layout.css">
-<link rel="stylesheet" href="styles/dialog-actions.css"><script src="scripts/dialog-actions.js" defer></script></head>
-<body><div class="my-page"><header class="page-bar"><div class="app-bar__leading"><a class="app-bar__icon" href="mypage.html" aria-label="뒤로가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg></a><h1 id="title">북마크</h1></div></header>
+<link rel="stylesheet" href="styles/dialog-actions.css"><script src="scripts/dialog-actions.js" defer></script><link rel="stylesheet" href="styles/network-error.css">
+<script src="scripts/network-error.js" defer></script>
+<link rel="stylesheet" href="styles/viewport.css">
+</head>
+<body class="app-viewport"><div class="my-page"><header class="page-bar"><div class="app-bar__leading"><a class="app-bar__icon" href="mypage.html" aria-label="뒤로가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg></a><h1 id="title">북마크한 여행지</h1></div></header>
 <main>
   <section id="bookmarks" hidden>
-    <nav class="activity-tabs" aria-label="북마크 종류"><a href="#bookmarks">여행지</a><a href="#bookmarks/courses">여행 루트</a></nav>
+    <ul class="destination-list" aria-label="북마크한 여행지" hidden></ul>
     <p class="bookmark-empty"><img src="assets/travel-plane.svg" alt="" width="84" height="64"><span></span></p>
   </section>
   <section id="settings" class="menu-section" aria-label="설정" hidden>

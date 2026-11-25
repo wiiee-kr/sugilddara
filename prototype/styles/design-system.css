@@ -57,6 +57,7 @@
 
 /* Layout */
 :root {
+  --app-body-gap: 16px;
   --section-gap: 40px;
   --section-content-gap: 12px;
   --course-thumbnail-size: 100px;

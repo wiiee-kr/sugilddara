@@ -1,5 +1,4 @@
 @import url('./design-system.css');
-@import url('./activity-tabs.css');
 
 .my-page { max-width: 480px; margin: 0 auto; }
 .page-bar { display: flex; align-items: center; gap: 0; height: calc(var(--app-bar-height, 48px) + env(safe-area-inset-top)); min-height: calc(var(--app-bar-height, 48px) + env(safe-area-inset-top)); padding: env(safe-area-inset-top) 16px 0; }
@@ -24,6 +23,7 @@ button { cursor: pointer; color: inherit; }
   line-height: var(--typography-label-m-line-height); letter-spacing: 0;
 }
 .menu-section { border-top: 1px solid #f6f6f6; padding: 14px 24px; }
+#settings.menu-section { border-top: 0; padding-top: 0; }
 .menu-item { display: flex; align-items: center; gap: 8px; min-height: 58px; text-decoration: none; color: #191919; font-size: 15px; font-weight: 400; border-radius: 6px; }
 .menu-item > svg { color: #555; }
 .app-version__value { margin-left: auto; color: #888; font-size: 13px; font-weight: 400; line-height: 20px; }
@@ -72,3 +72,4 @@ body { margin: 0; color: #191919; background: white; }
 .page-footer, .page-footer p:first-child { font-size: var(--type-caption); }
 .bookmark-empty { margin: 60px 16px; text-align: center; color: #646464; font-size: var(--type-label); }
 .bookmark-empty img { display: block; margin: 0 auto 16px; }
+#bookmarks { padding-inline: 16px; }

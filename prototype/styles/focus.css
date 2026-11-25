@@ -1,5 +1,13 @@
-/* Shared focus appearance across all app screens. */
-:focus,
-:focus-visible {
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root:not([data-keyboard-focus]) :focus {
   outline: none;
+}
+
+:root[data-keyboard-focus] :is(a[href], button, input, select, textarea, summary, [contenteditable="true"], [tabindex="0"]):focus-visible,
+:root[data-keyboard-focus] :is(.choices, .options) input:focus-visible + span {
+  outline: 2px solid var(--ds-product-primary);
+  outline-offset: 2px;
 }

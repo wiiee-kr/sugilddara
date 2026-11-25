@@ -262,15 +262,12 @@ body > main#app > header .packing-create:disabled { color: #999; opacity: 1; }
 
 body > main#app > header .packing-create[data-action="base"] { color: #000; }
 
-/* Keep the home creation CTA above the bottom navigation. */
+/* Anchor the home action to the app frame, alongside the bottom navigation. */
 .packing-home-actions {
-  position: fixed;
+  position: absolute;
   z-index: 9;
-  left: 16px;
-  right: 16px;
+  inset-inline: 16px;
   bottom: calc(var(--bottom-nav-height) + var(--bottom-nav-offset) + 12px);
-  max-width: 448px;
-  margin-inline: auto;
   justify-items: end;
   pointer-events: none;
 }

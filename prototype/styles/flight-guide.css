@@ -1,5 +1,5 @@
 .guide { min-height: calc(100svh - var(--app-bar-offset) - var(--app-bar-height)); }
-.ticket { margin-top: 0; padding: 12px 0; font-size: 16px; border-bottom: 1px solid #dce3ea; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
+.ticket { margin-top: 0; padding-bottom: 12px; font-size: 16px; border-bottom: 1px solid #dce3ea; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
 .ticket span { color: #566373; }
 .guide h1 { font-size: 1.75rem; }
 .guide h1:focus { outline: none; }
@@ -11,7 +11,7 @@
 .location dd { margin: 0; color: #173959; font-size: 22px; font-weight: 600; }
 .location dd + dt { margin-top: 12px; padding-top: 12px; border-top: 1px solid #cedff1; }
 .guide footer { position: sticky; bottom: 0; background: white; padding: 14px 0 calc(12px + env(safe-area-inset-bottom)); margin-top: auto; }
-.guide { display: flex; flex-direction: column; padding: 12px 20px 0; }
+.guide { display: flex; flex-direction: column; padding-inline: 20px; padding-bottom: 0; }
 #next { display: grid; place-items: center; padding: 10px; min-height: 48px; background: var(--ds-product-primary); color: white; border-radius: 10px; text-decoration: none; text-align: center; font-weight: 600; }
 #detail { margin-top: 8px; }
 #arrival-photo { margin: var(--section-gap) 0 18px; }

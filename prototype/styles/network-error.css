@@ -1,0 +1,65 @@
+/* Shared full-screen network state, matching the Chabakchabak error screen. */
+dialog.network-screen {
+  box-sizing: border-box;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: auto;
+  padding: calc(12px + env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+  color: #212121;
+  font: 400 var(--type-body, 1.125rem)/1.5 var(--font-app);
+  text-align: center;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.network-screen::backdrop { background: #ededed; }
+.network-screen__bar {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 48px;
+  padding-right: 20px;
+  border-radius: 999px;
+  box-shadow: 0 0 8px rgb(0 0 0 / 8%), 0 0 2px rgb(0 0 0 / 2%);
+  font-size: var(--type-heading, 1.25rem);
+  font-weight: 500;
+}
+.network-screen .network-screen__back {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.network-screen__back svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.network-screen__icon { display: block; width: 120px; height: 100px; margin: var(--app-body-gap) auto 20px; }
+.network-screen h2 { margin: 0; font-size: var(--type-heading, 1.25rem); line-height: 1.4; font-weight: 600; }
+.network-screen p { margin: 12px 0 0; color: #707070; font: inherit; }
+.network-screen .network-screen__retry {
+  width: 100%;
+  min-height: 48px;
+  margin: 20px 0 0;
+  padding: 10px 16px;
+  border: 1px solid #dedede;
+  border-radius: 12px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.network-screen button:active { background: #f6f6f6; }

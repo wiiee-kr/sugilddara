@@ -1,0 +1,92 @@
+/* The five tabs share the My Page preview frame. */
+:root {
+  --app-viewport-width: 100%;
+  --app-viewport-height: 100dvh;
+  --app-viewport-top: 0px;
+  --app-viewport-border: 0px;
+  --app-viewport-radius: 0px;
+}
+@media (min-width: 521px) {
+  :root {
+    --app-viewport-width: 430px;
+    --app-viewport-height: min(860px, calc(100dvh - 56px));
+    --app-viewport-top: 35px;
+    --app-viewport-border: 1px;
+    --app-viewport-radius: 24px;
+  }
+}
+html:has(.app-viewport) { background: #ededed; }
+body:has(> .app-viewport) { margin: 0; background: transparent; }
+body.app-viewport, div.app-viewport {
+  box-sizing: border-box;
+  position: relative;
+  width: var(--app-viewport-width);
+  max-width: none;
+  height: var(--app-viewport-height);
+  min-height: 0;
+  margin: var(--app-viewport-top) auto 0;
+  padding: 0;
+  overflow: clip;
+  border: var(--app-viewport-border) solid #dedede;
+  border-radius: var(--app-viewport-radius);
+  background: white;
+}
+.app-viewport > .app-nav { position: absolute; width: calc(100% - 32px); }
+
+/* The content scrolls independently of the frame and bottom navigation. */
+.app-viewport > .my-page, body.app-viewport > main#app {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+.app-viewport > aside { display: none; }
+body.app-viewport > main#app { border: 0; padding-inline: 16px; }
+.app-viewport > :is(.notice, #toast) { position: absolute; }
+
+.flight-page.app-viewport { display: flex; flex-direction: column; }
+.flight-page.app-viewport > main {
+  flex: 1;
+  width: 100%;
+  max-width: none;
+  min-height: 0;
+  margin: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Modal dialogs use the browser's top layer, outside the frame's layout. */
+@media (min-width: 521px) {
+  :root {
+    --app-viewport-bottom: calc(100dvh - var(--app-viewport-top) - var(--app-viewport-height));
+    --app-viewport-inner-width: calc(var(--app-viewport-width) - 2 * var(--app-viewport-border));
+  }
+  dialog.network-screen, dialog.video-sheet {
+    width: var(--app-viewport-width);
+    height: var(--app-viewport-height);
+    margin: var(--app-viewport-top) auto 0;
+    border: var(--app-viewport-border) solid #dedede;
+    border-radius: var(--app-viewport-radius);
+  }
+  .app-viewport :is(#profile-dialog, #order-sheet, dialog.sheet) {
+    position: fixed;
+    inset: auto 0 calc(var(--app-viewport-bottom) + var(--app-viewport-border));
+    width: var(--app-viewport-inner-width);
+    max-height: calc(var(--app-viewport-height) - 24px);
+    margin: 0 auto;
+    border-bottom-left-radius: var(--app-viewport-radius);
+    border-bottom-right-radius: var(--app-viewport-radius);
+  }
+  .app-viewport :is(#calendar, #dialog)[open] {
+    position: fixed;
+    inset: var(--app-viewport-top) 0 var(--app-viewport-bottom);
+    max-width: calc(var(--app-viewport-inner-width) - 32px);
+    max-height: calc(var(--app-viewport-height) - 32px);
+    margin: auto;
+  }
+}
