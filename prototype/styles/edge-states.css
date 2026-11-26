@@ -41,11 +41,11 @@
 .view:has(> #search-results > .data-empty) > .searchbox { padding-bottom: 0; }
 
 /* Scroll content behind the split floating bar, without an opaque header strip. */
-.phone .topbar:has(+ .view) { pointer-events: none; }
-.phone .topbar :is(.app-bar__leading, .app-bar__actions) { pointer-events: auto; }
 .phone .topbar + .view {
-  margin-top: calc(-1 * (var(--app-bar-height) + var(--app-bar-offset)));
-  padding-top: calc(var(--app-bar-height) + var(--app-bar-offset) + var(--app-body-gap));
+  margin-top: calc(-1 * var(--app-bar-bottom));
+  padding-top: calc(var(--app-bar-bottom) + var(--app-body-gap));
+  scroll-padding-top: var(--app-bar-bottom);
 }
+.phone .topbar + .view:has(> .activity-tabs) { padding-top: 0; }
 
 .data-empty.search-prompt { padding-top: 32px; }

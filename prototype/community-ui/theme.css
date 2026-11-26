@@ -107,7 +107,12 @@
 .primary, .text-action { font-weight: 600; }
 
 /* Activity segmented navigation sits directly below the app bar. */
-.topbar:has(+ .activity-tabs) { border-bottom: 0; margin-bottom: 0; }
+.view > .activity-tabs {
+  position: sticky;
+  top: calc(var(--app-bar-bottom) + var(--app-body-gap));
+  margin-top: calc(var(--app-bar-bottom) + var(--app-body-gap));
+  z-index: 2;
+}
 .detail > .body-copy { margin-top: 16px; }
 
 /* Solid pencil for the write floating action button. */

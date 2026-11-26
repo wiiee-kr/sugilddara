@@ -43,6 +43,7 @@ main#app > header > strong {
   --floating-bar-shadow: 0 4px 24px rgb(0 0 0 / 10%), 0 1px 4px rgb(0 0 0 / 3%);
   --app-bar-shadow: 0 0 8px rgb(0 0 0 / 8%), 0 0 2px rgb(0 0 0 / 2%);
   --app-bar-offset: calc(12px + env(safe-area-inset-top));
+  --app-bar-bottom: calc(var(--app-bar-offset) + var(--app-bar-height));
 }
 .app-bar, .page-bar, .topbar, main#app > header {
   position: sticky;
@@ -62,6 +63,7 @@ main#app > header > strong {
   border-radius: 0;
   background: transparent;
   box-shadow: none;
+  pointer-events: none;
 }
 .app-bar h1, .page-bar h1, .topbar h1, body > main#app > header .app-bar__leading > strong {
   flex: 1;
@@ -79,7 +81,8 @@ main#app > header > strong {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
- .app-bar__leading, .app-bar__actions {
+.app-bar__leading, .app-bar__actions {
+  pointer-events: auto;
   display: flex;
   align-items: center;
   gap: 0;
@@ -153,9 +156,6 @@ body[data-host-prefix] > .note { display: none; }
   height: 22px;
   stroke-width: 1.9;
 }
-
-/* Tabs are the first body element on activity screens. */
-.topbar + .activity-tabs { margin-top: var(--app-body-gap); }
 
 /* Menu rows on depth-two and deeper screens. */
 :root { --detail-menu-gap: 8px; --detail-menu-padding-y: 8px; }

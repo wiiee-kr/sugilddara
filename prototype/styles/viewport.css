@@ -60,6 +60,17 @@ body.app-viewport > main#app { border: 0; padding-inline: 16px; }
   overscroll-behavior: contain;
 }
 
+/* Keep sibling scroll containers under the floating controls. */
+.app-viewport > .app-bar {
+  position: absolute;
+  inset-inline: 0;
+  margin-block: 0;
+}
+.app-viewport > .app-bar + main {
+  padding-top: calc(var(--app-bar-bottom) + var(--app-body-gap));
+  scroll-padding-top: var(--app-bar-bottom);
+}
+
 /* Modal dialogs use the browser's top layer, outside the frame's layout. */
 @media (min-width: 521px) {
   :root {

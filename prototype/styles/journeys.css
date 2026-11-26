@@ -25,7 +25,6 @@ button { cursor: pointer; }
   stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
 }
 #bar .brand { display: flex; align-items: center; }
-#bar:has(.brand) { width: 100%; max-width: none; padding-inline: 16px; background: white; }
 .brand img { display: block; width: auto; height: 32px; }
 #bar .app-bar__actions { padding-inline: 2px; }
 #bar .app-bar__icon .icon { width: 22px; height: 22px; }
@@ -38,7 +37,7 @@ button { cursor: pointer; }
 #journey:has(+ .app-nav[hidden]) { padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)); }
 .home-content, .detail-content, .journey-search { padding-inline: 16px; }
 #journey:has(> .home-content) { padding-top: 0; }
-.home-content { padding-top: var(--app-body-gap); }
+.home-content { padding-top: calc(var(--app-bar-bottom) + var(--app-body-gap)); }
 .home-content h2, .day-heading h2, .source-film h2, .search-section h2 {
   font-size: var(--type-heading); line-height: 1.4; letter-spacing: -.025em;
 }
@@ -47,14 +46,14 @@ button { cursor: pointer; }
   font-size: var(--type-title); line-height: 1.35; letter-spacing: -.035em;
 }
 .continent-chips {
-  position: sticky; z-index: 3; top: var(--chips-top, 0px); display: flex; gap: 10px;
+  position: sticky; z-index: 3; top: var(--chips-top, var(--app-bar-bottom)); display: flex; gap: 10px;
   overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
   margin: 0 -16px; padding: 16px; background: white;
 }
 @media (prefers-reduced-motion: no-preference) {
   .continent-chips { transition: top 160ms ease-out; }
 }
-:root[data-keyboard-focus] .continent-chips:focus-within { top: 0; }
+:root[data-keyboard-focus] .continent-chips:focus-within { top: var(--app-bar-bottom); }
 .continent-chips::-webkit-scrollbar { display: none; }
 .continent-chips a {
   display: inline-flex; flex: none; align-items: center; gap: 5px; min-height: 44px;
@@ -87,6 +86,14 @@ button { cursor: pointer; }
 }
 .bookmark-toast:not(:empty) { padding: 10px 16px; }
 .country-region { font-size: var(--type-label); color: var(--muted); }
+.trip-intro { margin-top: 12px; font-size: var(--type-body); line-height: 1.6; word-break: keep-all; }
+.travel-notes { margin-top: 24px; }
+.travel-notes h2, .travel-notes summary { font-size: var(--type-body); font-weight: 600; }
+.travel-notes summary { min-height: 48px; padding-block: 12px; cursor: pointer; }
+.travel-notes ul { padding: 0; list-style: none; }
+.travel-notes li { padding-block: 12px; border-bottom: 1px solid var(--line); }
+.travel-notes li p { line-height: 1.6; }
+.travel-notes li a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--blue-text); }
 .country-detail h1 { margin: 3px 0 0; font-size: var(--type-title); line-height: 1.35; letter-spacing: -.03em; word-break: keep-all; }
 .country-detail h1 .country-flag { font-size: .85em; }
 .country-detail .day-chips { margin-inline: -20px; padding-inline: 20px; }
@@ -185,40 +192,21 @@ button { cursor: pointer; }
 .day-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .day-heading { margin-bottom: var(--section-content-gap); }
 
-.map-canvas {
-  position: relative; isolation: isolate; height: 200px; border: 1px solid #dce5ed; border-radius: 16px;
-  background-color: #f1f5f7;
-  background-image: repeating-linear-gradient(32deg, transparent 0 42px, white 43px 48px, transparent 49px 102px),
-                    repeating-linear-gradient(-58deg, transparent 0 50px, white 51px 55px, transparent 56px 118px);
-  overflow: hidden;
+.journey-map { margin: 0; }
+.journey-map iframe {
+  display: block; width: 100%; height: clamp(280px, 75vw, 340px);
+  border: 1px solid var(--line); border-radius: 16px; background: #f2f4f5;
 }
-.map-canvas::before, .map-canvas::after {
-  content: ''; position: absolute; z-index: -1; border-radius: 10px; background: #dcebe1; transform: rotate(32deg);
+.journey-map figcaption { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; }
+.journey-map figcaption p {
+  flex-basis: 100%; margin-top: 8px; color: var(--muted); font-size: var(--type-body);
+  line-height: 1.5; word-break: keep-all; overflow-wrap: anywhere;
 }
-.map-canvas::before { width: 70px; height: 32px; top: 0; right: 4%; }
-.map-canvas::after { width: 90px; height: 50px; bottom: -12px; left: 25%; }
-.map-canvas.day-2 { background-position: 20px -26px, -12px 18px; }
-.map-legend {
-  position: absolute; top: 8px; left: 10px; border-radius: 6px; padding: 3px 7px;
-  color: #495865; background: white; font-size: var(--type-caption); font-weight: 500;
+.journey-map .map-link {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
+  color: var(--blue-text); font-size: var(--type-body); font-weight: 500;
 }
-.map-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.map-lines polyline { stroke: var(--ds-primary-pressed); stroke-width: 2.5; stroke-dasharray: 4 5; fill: none; }
-.map-marker {
-  position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%);
-  display: grid; place-items: center; width: 44px; height: 44px; z-index: 1; border-radius: 50%;
-}
-.map-marker b {
-  display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
-  background: white; color: var(--blue-text); border: 2px solid var(--blue-text);
-  font-size: var(--type-body); line-height: 1; box-shadow: 0 2px 4px rgb(28 57 78 / 12%);
-}
-.map-marker span {
-  position: absolute; top: calc(50% + 19px); white-space: nowrap; padding: 1px 4px;
-  background: rgb(255 255 255 / 95%); color: #263746; border-radius: 4px;
-  font-size: var(--type-caption); font-weight: 500;
-}
-.map-marker.picked b { color: white; background: var(--ds-primary-pressed); box-shadow: 0 0 0 4px #c5e3ff; }
+.journey-map .map-link .icon { width: 16px; height: 16px; }
 .stops { list-style: none; padding: 0; margin-top: var(--section-content-gap); }
 .stops li { position: relative; }
 .stops li:not(:last-child)::before {
@@ -313,8 +301,4 @@ button { cursor: pointer; }
 @media (hover: hover) {
   .place-actions .primary:hover { background: var(--ds-primary-hover); }
   .film-row:hover strong, .stop-row:hover strong, .search-list a:hover strong { color: var(--blue-text); }
-}
-@media (max-width: 22rem) {
-  .map-canvas { height: 220px; }
-  .map-marker span { width: 26vw; text-align: center; white-space: normal; line-height: 1.2; word-break: keep-all; }
 }

@@ -24,7 +24,7 @@ const countriesByContinent = {
       countryFilm('77uzl7nQlYI', '타이베이에서 시작하는 대만 자유여행')
     ], ['타이완']),
     destination('kr', '대한민국', '동아시아', '철원', [countryFilm('MN_gzTOzvlE', '국경도시 철원의 가을 여행')], ['한국', '국내']),
-    destination('la', '라오스', '동남아시아', '비엔티안 · 루앙프라방 · 팍세', officialSeries.laos.films, officialSeries.laos.keywords),
+    destination('la', '라오스', '동남아시아', '비엔티안 · 팍세 · 참파삭 · 루앙프라방 · 방비엥', officialSeries.laos.films, officialSeries.laos.keywords),
     destination('mn', '몽골', '동아시아', '울란바토르', [countryFilm('3fX2Iyvb9ro', '몽골 몰아보기 2편 · 초원의 유목 생활'), countryFilm('VhJjJi5exe4', '유목민의 초원에서 울란바토르로')]),
     destination('mm', '미얀마', '동남아시아', '양곤', [countryFilm('m_2Rl5rCfsI', '미얀마 여행 몰아보기')]),
     destination('bd', '방글라데시', '남아시아', '다카', [countryFilm('MdjNVTclBGw', '방글라데시 여행 몰아보기')]),
@@ -34,10 +34,10 @@ const countriesByContinent = {
     ]),
     destination('lk', '스리랑카', '남아시아', '콜롬보 · 캔디', [countryFilm('B7WC5OLGYTw', '스리랑카에서 만난 한국어 열풍')]),
     destination('ae', '아랍에미리트', '서아시아', '두바이', [countryFilm('heQ7RtcTd5Y', '두바이의 미래 도시 풍경')], ['UAE', '중동']),
-    destination('am', '아르메니아', '코카서스', '예레반', [countryFilm('owuNJfzrino', '아르메니아 여행 몰아보기'), ...officialSeries.caucasus.films.filter(film => film.countryId === 'am')]),
-    destination('az', '아제르바이잔', '코카서스', '바쿠', [countryFilm('6FyklV4o2-8', '아제르바이잔 여행 몰아보기'), ...officialSeries.caucasus.films.filter(film => film.countryId === 'az')]),
+    destination('am', '아르메니아', '코카서스', '예레반 · 가르니 · 세반 호수 · 딜리잔', [countryFilm('owuNJfzrino', '아르메니아 여행 몰아보기'), ...officialSeries.caucasus.films.filter(film => film.countryId === 'am')]),
+    destination('az', '아제르바이잔', '코카서스', '바쿠 · 셰키', [countryFilm('6FyklV4o2-8', '아제르바이잔 여행 몰아보기'), ...officialSeries.caucasus.films.filter(film => film.countryId === 'az')]),
     destination('om', '오만', '서아시아', '무스카트 · 니즈와', [countryFilm('ImGMUkyZlLM', '오만 니즈와의 오아시스'), countryFilm('es6Oe6NhHsE', '무스카트에서 만난 사람들')], ['중동']),
-    destination('uz', '우즈베키스탄', '중앙아시아', '타슈켄트', [uzbekistanTajikistan, countryFilm('s5_Bl6wzh9c', '한국어로 여행하는 타슈켄트')]),
+    destination('uz', '우즈베키스탄', '중앙아시아', '안디잔 · 타슈켄트 · 부하라 · 사마르칸트', [uzbekistanTajikistan, countryFilm('s5_Bl6wzh9c', '한국어로 여행하는 타슈켄트')]),
     destination('in', '인도', '남아시아', '델리 · 뭄바이', [countryFilm('Q7Rdmvg9pzs', '여기로 떠나볼까 · 인도 뭄바이'), countryFilm('rbXa3fc6QF8', '배낭을 메고 델리로')]),
     destination('id', '인도네시아', '동남아시아', '자카르타 · 말랑', [
       countryFilm('gzEeiKUsCB4', '인도네시아 몰아보기 2편 · 수라바야와 발리'),
@@ -45,12 +45,12 @@ const countriesByContinent = {
       countryFilm('ESl-XQXSikk', '한국어 대회 우승자와 둘러본 자카르타')
     ]),
     destination('jp', '일본', '동아시아', '홋카이도', [countryFilm('e82DAH_57jA', '올여름 가족여행은 시원한 홋카이도에서')]),
-    destination('ge', '조지아', '코카서스', '트빌리시 · 카즈베기 · 바투미', officialSeries.caucasus.films.filter(film => film.countryId === 'ge'), ['그루지야']),
+    destination('ge', '조지아', '코카서스', '트빌리시 · 카즈베기 · 쿠타이시 · 바투미', officialSeries.caucasus.films.filter(film => film.countryId === 'ge'), ['그루지야']),
     destination('cn', '중국', '동아시아', '칭다오 · 웨이하이 · 옌타이 · 단둥', [countryFilm('XW-AeazkGlY', '중국 산둥성 세 도시 몰아보기'), countryFilm('Co4_1yRxahA', '단둥에서 마주한 압록강 너머의 풍경')]),
     destination('kz', '카자흐스탄', '중앙아시아', '알마티', officialSeries['central-asia'].films, ['Almaty']),
     destination('qa', '카타르', '서아시아', '도하', [countryFilm('uT5jx3VESY8', '도하에서 시작하는 중동 여행')], ['중동']),
     destination('kh', '캄보디아', '동남아시아', '프놈펜 · 시엠립', [countryFilm('YoLZlTaepEE', '캄보디아 6편 · 불개미를 잡아 살아가는 가족'), countryFilm('IpEfAVUx0kc', '프놈펜에서 시작하는 캄보디아 여행')]),
-    destination('kg', '키르기스스탄', '중앙아시아', '비슈케크', [
+    destination('kg', '키르기스스탄', '중앙아시아', '비슈케크 · 이식쿨 · 촐폰아타 · 알라아르차', [
       countryFilm('51hLM5XGDAI', '다시 가고 싶은 키르기스스탄 몰아보기'),
       countryFilm('3XUDspif8ME', '키르기스스탄의 물가와 여행 이야기'), ...officialSeries['central-asia'].films
     ], ['키르기즈스탄', 'Bishkek']),

@@ -1,5 +1,4 @@
-/* The sequence and place names follow the visible stops in the November 16 recording.
-   Pin positions are schematic and are independent of the Google Maps searches. */
+/* The sequence and place names follow the visible stops in the November 16 recording. */
 const travelCourses = [{
   id: 'ashgabat', countryId: 'tm', series: 'central-asia', thumbnail: 'assets/ashgabat-video.jpg',
   mapArea: 'Ashgabat, Turkmenistan', keywords: ['아시가바트', 'Ashgabat', 'Turkmenistan', '중앙아시아'],
@@ -11,7 +10,7 @@ const travelCourses = [{
     { id: '2SStfE9mVcM', episode: 2, duration: '42:26', title: '여행하기 가장 어려운 나라! 미녀 통역사 사막여행' },
     { id: 'VqyhmguzqUk', episode: 3, duration: '53:54', title: '자유여행이 불가한 나라! 모든 걸 허가 받아야 한다. 그런데 떠나려니 아쉽다.' }
   ],
-  days: [
+  sections: [
     { title: '시장과 기념탑', stops: [
       { id: 'karakum', name: '카라쿰 호텔', local: 'Karakum Hotel', kind: '숙소',
         summary: '첫날의 출발지', sceneSummary: '아쉬가바트 여행은 카라쿰 호텔에서 시작해요. 수길따라님이 숙소를 나서 처음 향한 곳은 굴리스탄 바자르예요.',
@@ -37,10 +36,20 @@ const travelCourses = [{
         keywords: ['레닌 동상', '공원 주변'], tip: '지도에서는 영어 이름 Lenin Monument로 찾을 수 있어요. 앞서 들른 공원과 위치를 함께 살펴보세요.' }
     ] }
   ]
-}].map(item => ({
+}, ...filmItineraries.map(itinerary => {
+  const country = travelCountries.find(entry => entry.id === itinerary.countryId);
+  const film = country.films.find(entry => entry.id === itinerary.sourceVideoId);
+  return {
+    ...itinerary, id: country.id + '-film', byRegion: true,
+    series: { '코카서스': 'caucasus', '중앙아시아': 'central-asia', '동남아시아': 'laos' }[country.region],
+    city: country.name, country: country.name, keywords: country.aliases,
+    thumbnail: 'https://i.ytimg.com/vi/' + film.id + '/mqdefault.jpg',
+    videos: [{ ...film, duration: timeLabel(itinerary.durationSeconds) }]
+  };
+})].map(item => ({
   ...item,
   sourceVideo: item.videos.find(video => video.id === item.sourceVideoId),
-  visits: item.days.flatMap((day, d) => day.stops.map((stop, i) => ({ ...stop, day: d + 1, number: i + 1 })))
+  visits: item.sections.flatMap((section, index) => section.stops.map((stop, i) => ({ ...stop, day: index + 1, number: i + 1 })))
 }));
 const youtubeUrl = video => 'https://www.youtube.com/watch?v=' + video.id;
 const iconPaths = {
@@ -89,7 +98,13 @@ function placeHash(stop, filter) {
   const suffix = originSuffix(searchOrigin, seriesOrigin, countryOrigin);
   return (directPlace ? '#visit/' + course.id + '/' + stop.id : '#course/' + course.id + '/' + filter + '/' + stop.id) + suffix;
 }
-const timeLabel = (s) => Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+function timeLabel(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor(seconds / 60) % 60;
+  return (hours ? hours + ':' + String(minutes).padStart(2, '0') : minutes) + ':' + String(seconds % 60).padStart(2, '0');
+}
+const videoLabel = video => video.episode ? video.episode + '편' : '몰아보기';
+const sectionLabel = (item, number) => item.byRegion ? item.sections[number - 1].title : number + '일차';
 const external = (url, label, className, glyph) =>
   '<a class="' + className + '" target="_blank" rel="noopener noreferrer" href="' + url + '">' + icon(glyph) + label + '</a>';
 let course;
@@ -127,8 +142,8 @@ function openVideoSheet() {
     const thumbnail = video.thumbnail || 'https://i.ytimg.com/vi/' + video.id + '/mqdefault.jpg';
     return '<li><a class="video-list__row" href="' + youtubeUrl(video) + '">' +
       '<span class="video-list__thumbnail" style="background-image:url(\'' + thumbnail + '\')">' +
-      '<small>' + video.duration + '</small></span><span class="video-list__info"><small>' + video.episode +
-      '편</small><strong>' + video.title + '</strong></span>' + icon('external') + '</a></li>';
+      '<small>' + video.duration + '</small></span><span class="video-list__info"><small>' + videoLabel(video) +
+      '</small><strong>' + video.title + '</strong></span>' + icon('external') + '</a></li>';
   }).join('');
   videoSheet.showModal();
 }
@@ -141,8 +156,8 @@ videoSheet.addEventListener('click', event => {
 });
 
 function courseFacts(videoCount = course.videos.length) {
-  const itinerary = course ? '<span>' + icon('days') + course.days.length + '일 일정</span>' +
-    '<span>' + icon('pin') + '장소 ' + course.visits.length + '곳</span>' : '';
+  const dayCount = course && !course.byRegion ? '<span>' + icon('days') + course.sections.length + '일 일정</span>' : '';
+  const itinerary = course ? dayCount + '<span>' + icon('pin') + (course.byRegion ? '여행 장면 ' + course.visits.length + '개' : '장소 ' + course.visits.length + '곳') + '</span>' : '';
   return '<div class="facts">' + itinerary + '<span>' + icon('video') + '영상 ' + videoCount + '편</span></div>';
 }
 
@@ -218,8 +233,9 @@ function countryDetail(country, courses, filter) {
   const previousVideoScroll = main.querySelector('.country-videos ul')?.scrollLeft || 0;
   main.innerHTML = '<article class="country-detail"><p class="country-region">' + continentNames[country.continent] +
     ' · ' + country.region + '</p><h1>' + countryFlag(country) + ' ' + country.name + '</h1>' + itineraries +
-    courseFacts(films.length) + (course ? dayChips(filter) : '') + countryVideos(country, films) +
-    (course ? itineraryDays(filter) : places) + '</article>';
+    courseFacts(films.length) + (course?.intro ? '<p class="trip-intro">' + course.intro + '</p>' : '') +
+    (course ? dayChips(filter) : '') + countryVideos(country, films) +
+    (course ? itineraryDays(filter) + travelNotes(course.notes) : places) + '</article>';
   if (course) positionDayChips(previousScroll);
   const videoList = main.querySelector('.country-videos ul');
   if (videoList) videoList.scrollLeft = previousVideoScroll;
@@ -228,7 +244,8 @@ function countryDetail(country, courses, filter) {
 function courseRow(item, href) {
   return '<li><a class="search-course" href="' + href + '"><img src="' + item.thumbnail +
     '" alt=""><span><strong>' + item.city + ' 여행</strong><small>' + item.country + ' · ' +
-    item.days.length + '일 · 장소 ' + item.visits.length + '곳</small></span>' + icon('next') + '</a></li>';
+    (item.byRegion ? '여행 장면 ' + item.visits.length + '개' : item.sections.length + '일 · 장소 ' + item.visits.length + '곳') +
+    '</small></span>' + icon('next') + '</a></li>';
 }
 
 function seriesDetail(series) {
@@ -238,7 +255,7 @@ function seriesDetail(series) {
   main.innerHTML = '<article class="series-detail">' + coverArt(series) + '<h1>' + series.name +
     '</h1><p class="series-cities">' + icon('pin') + series.cities.join(' · ') + '</p>' +
     (courses.length ? '<section class="search-section"><h2>여행 코스</h2><ul class="search-list">' +
-      courses.map(item => courseRow(item, courseHash(item, 1, searchOrigin, series))).join('') + '</ul></section>' : '') +
+      courses.map(item => courseRow(item, courseHash(item, item.byRegion ? 'all' : 1, searchOrigin, series))).join('') + '</ul></section>' : '') +
     (series.films.length ? '<section class="collection-section"><h2>여행 영상</h2><ul class="film-list">' +
       series.films.map(filmRow).join('') + '</ul></section>' : '') + '</article>';
 }
@@ -263,9 +280,9 @@ function searchResults(value) {
   const placeRows = [];
   for (const item of travelCourses) {
     const destination = [item.country, item.city, ...item.keywords].join(' ');
-    for (const stop of item.visits.filter(s => matches([destination, s.name, s.local].join(' ')))) {
+    for (const stop of item.visits.filter(s => matches([destination, sectionLabel(item, s.day), s.name, s.local].join(' ')))) {
       placeRows.push('<li><a class="search-place" href="#visit/' + item.id + '/' + stop.id + params + '"><strong>' + stop.name +
-        '</strong><small>' + item.city + ' 여행 · ' + stop.day + '일차 · ' + stop.kind + '</small></a></li>');
+        '</strong><small>' + item.city + ' 여행 · ' + sectionLabel(item, stop.day) + (stop.kind ? ' · ' + stop.kind : '') + '</small></a></li>');
     }
   }
   if (!countryRows.length && !placeRows.length) return '<p class="search-missing">검색 결과가 없어요.</p>';
@@ -291,47 +308,103 @@ function searchPage(value) {
   main.querySelector('form').addEventListener('submit', e => { e.preventDefault(); input.blur(); });
 }
 
-// The overview is deliberately a visit-order sketch. The place action opens its geographic map.
-function dayMap(day, filter, selected) {
-  const stops = course.visits.filter(p => p.day === day);
-  const heights = day % 2 ? [62, 35, 57] : [40, 63, 38];
-  const points = stops.map((_, i) => [stops.length === 1 ? 50 : 18 + 64 * i / (stops.length - 1), heights[i % heights.length]]);
-  const path = points.map(([x,y]) => x + ',' + y).join(' ');
-  return '<div class="map-canvas day-' + day + '" role="group" aria-label="' + day + '일차 방문 순서 약도">' +
-    '<span class="map-legend">' + day + '일차 · 방문 순서 약도</span>' +
-    '<svg class="map-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' +
-    '<polyline vector-effect="non-scaling-stroke" points="' + path + '"/></svg>' +
-    stops.map((s, i) => '<a id="marker-' + s.id + '" class="map-marker' + (s.id === selected ? ' picked' : '') + '" style="--x:' + points[i][0] + '%;--y:' + points[i][1] +
-      '%" href="' + placeHash(s, filter) + '"' + (s.id === selected ? ' aria-current="location"' : '') + ' aria-label="' + day + '일차 ' + s.number + '번째 ' + s.name + ' 상세"><b>' + s.number + '</b><span>' + s.name + '</span></a>').join('') + '</div>';
+function placeMapQuery(stop) {
+  if (stop.mapName) return stop.mapName;
+  if (stop.local) return stop.local + ', ' + (course.mapArea || course.country);
+  return stop.coords?.join(',') || '';
+}
+
+function regionMapQuery(day, stop) {
+  const section = course.sections[day - 1];
+  return stop?.mapArea || section.mapArea || course.mapArea || section.title + ', ' + course.country;
+}
+
+function googleSearchUrl(query) {
+  return 'https://www.google.com/maps/search/?' + new URLSearchParams({ api: '1', query });
+}
+
+// Mobile Google Maps links support three intermediate stops. Adjacent links share an endpoint.
+function routeLinks(stops) {
+  const links = [];
+  for (let i = 0; i < stops.length - 1; i += 4) {
+    const leg = stops.slice(i, i + 5);
+    const params = new URLSearchParams({
+      api: '1', origin: placeMapQuery(leg[0]), destination: placeMapQuery(leg.at(-1)), travelmode: 'driving'
+    });
+    if (leg.length > 2) params.set('waypoints', leg.slice(1, -1).map(placeMapQuery).join('|'));
+    const label = stops.length <= 5 ? '구글 지도에서 경로 보기' : leg[0].number + '번~' + leg.at(-1).number + '번 경로 보기';
+    links.push(external('https://www.google.com/maps/dir/?' + params, label, 'map-link', 'external'));
+  }
+  return links.join('');
+}
+
+function journeyMap(day, selected) {
+  const stops = selected ? [selected] : course.visits.filter(stop => stop.day === day);
+  const located = stops.filter(placeMapQuery);
+  const label = selected?.name || sectionLabel(course, day);
+  const params = new URLSearchParams({ hl: 'ko', output: 'embed' });
+  let caption;
+  let links = '';
+  if (located.length > 1) {
+    params.set('saddr', placeMapQuery(located[0]));
+    params.set('daddr', located.slice(1).map(placeMapQuery).join(' to:'));
+    params.set('dirflg', 'd');
+    caption = '구글 지도의 추천 차량 경로예요.';
+    links = routeLinks(located);
+  } else {
+    const query = located.length ? placeMapQuery(located[0]) : regionMapQuery(day, selected);
+    params.set('q', query);
+    if (located[0]?.coords) params.set('ll', located[0].coords.join(','));
+    params.set('z', located.length ? '15' : '11');
+    caption = located.length ? (selected ? '' : located[0].name) : '촬영 위치 기록이 없어 주변 지역을 표시해요.';
+    if (!selected) links = external(googleSearchUrl(query), '구글 지도에서 열기', 'map-link', 'external');
+  }
+  if (!selected && located.length && located.length < stops.length) {
+    caption += ' 전체 ' + stops.length + '곳 중 위치를 찾을 수 있는 ' + located.length + '곳을 표시해요.';
+  }
+  const footer = (caption ? '<p>' + caption + '</p>' : '') + links;
+  return '<figure class="journey-map"><iframe title="' + label + ' 구글 지도" src="https://maps.google.com/maps?' +
+    params.toString().replace(/&/g, '&amp;') + '" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' +
+    (footer ? '<figcaption>' + footer + '</figcaption>' : '') + '</figure>';
 }
 function stopRow(s, filter) {
   return '<li><a class="stop-row" id="row-' + s.id + '" href="' + placeHash(s, filter) +
-    '"><span class="stop-number">' + s.number + '</span><span class="stop-text"><strong>' + s.name + '</strong><span>' + s.summary +
+    '"><span class="stop-number">' + s.number + '</span><span class="stop-text"><strong>' + s.name + '</strong><span>' + (s.summary || '영상 ' + timeLabel(s.seconds)) + (placeMapQuery(s) ? '' : ' · 촬영 위치 미확인') +
     '</span></span>' + icon('next') + '</a></li>';
 }
 function dayChips(filter) {
-  const days = course.days.map((_, index) => String(index + 1));
-  return '<nav class="day-chips" aria-label="여행 일차 선택">' +
+  if (course.byRegion && course.sections.length === 1) return '';
+  const days = course.sections.map((_, index) => String(index + 1));
+  return '<nav class="day-chips" aria-label="' + (course.byRegion ? '방문 지역 선택' : '여행 일차 선택') + '">' +
     ['all', ...days].map(day => '<a href="' + routeHash(day) + '"' +
       (filter === day ? ' aria-current="page"' : '') + '>' +
-      (day === 'all' ? '전체' : day + '일차') + '</a>').join('') + '</nav>';
+      (day === 'all' ? '전체' : sectionLabel(course, day)) + '</a>').join('') + '</nav>';
 }
 function itineraryDays(filter) {
-  return course.days.map((day, index) => {
+  return course.sections.map((day, index) => {
     const number = index + 1;
     if (filter !== 'all' && Number(filter) !== number) return '';
     const stops = course.visits.filter(stop => stop.day === number);
-    return '<section class="day-section"><div class="day-heading"><span class="day-tag">' + number +
-      '일차</span><h2>' + day.title + '</h2></div>' + dayMap(number, filter) +
+    const tag = course.byRegion ? '' : '<span class="day-tag">' + number + '일차</span>';
+    return '<section class="day-section"><div class="day-heading">' + tag + '<h2>' + day.title + '</h2></div>' + journeyMap(number) +
       '<ol class="stops">' + stops.map(stop => stopRow(stop, filter)).join('') + '</ol></section>';
   }).join('');
 }
 function positionDayChips(previousScroll) {
   const chips = main.querySelector('.day-chips');
+  if (!chips) return;
   const selected = chips.querySelector('[aria-current]');
   const left = selected.offsetLeft;
   const right = left + selected.offsetWidth;
   chips.scrollLeft = Math.max(right - chips.clientWidth + 4, Math.min(previousScroll, left - 4));
+}
+function travelNotes(notes, expanded = false) {
+  if (!notes?.length) return '';
+  const entries = notes.map(note => '<li><p>' + note.text + '</p><a target="_blank" rel="noopener noreferrer" href="' +
+    youtubeUrl(course.sourceVideo) + '&amp;t=' + note.seconds + 's">' + icon('video') + note.kind + ' · ' + timeLabel(note.seconds) + '</a></li>').join('');
+  const title = '촬영 당시 여행 메모';
+  return expanded ? '<section class="travel-notes"><h2>' + title + '</h2><ul>' + entries + '</ul></section>' :
+    '<details class="travel-notes"><summary>' + title + ' ' + notes.length + '개</summary><ul>' + entries + '</ul></details>';
 }
 function courseDetail(filter) {
   let parent = searchOrigin === null ? homeHash(selectedContinent) : searchHash(searchOrigin);
@@ -346,34 +419,38 @@ function courseDetail(filter) {
   header('여행 코스', parent, backLabel, true);
   const previousScroll = main.querySelector('.day-chips')?.scrollLeft || 0;
   main.innerHTML = '<div class="detail-content"><div class="course-intro"><p class="overline">' + course.country +
-    '</p><h1>' + course.city + ' 여행</h1>' + courseFacts() + '</div>' + dayChips(filter) + itineraryDays(filter) +
+    '</p><h1>' + course.city + ' 여행</h1>' + courseFacts() + (course.intro ? '<p class="trip-intro">' + course.intro + '</p>' : '') +
+    '</div>' + dayChips(filter) + itineraryDays(filter) + travelNotes(course.notes) +
     '<section class="source-film"><h2>이 코스가 나온 영상</h2><a href="' + youtubeUrl(course.sourceVideo) + '" target="_blank" rel="noopener noreferrer">' +
     '<span class="video-thumb"><img src="' + course.thumbnail + '" alt="">' + icon('play') + '</span><span><strong>' +
-    course.sourceVideo.title + '</strong><small>수길따라 · ' + course.country + ' ' + course.sourceVideo.episode + '편</small></span>' + icon('external') + '</a></section></div>';
+    course.sourceVideo.title + '</strong><small>수길따라 · ' + course.country + ' ' + videoLabel(course.sourceVideo) + '</small></span>' + icon('external') + '</a></section></div>';
 
   positionDayChips(previousScroll);
 }
 function placeDetail(s, filter) {
   const backLabel = directPlace ? '검색 결과로 돌아가기' : currentCountry ? currentCountry.name + ' 여행지로 돌아가기' : '여행 코스로 돌아가기';
   header('장소 정보', directPlace ? searchHash(searchOrigin) : routeHash(filter), backLabel);
-  const mapUrl = 'https://www.google.com/maps/search/?api=1&amp;query=' + encodeURIComponent(s.local + ', ' + course.mapArea);
+  const mapQuery = placeMapQuery(s);
+  const mapUrl = googleSearchUrl(mapQuery || regionMapQuery(s.day, s));
   const video = s.videoId ? course.videos.find(item => item.id === s.videoId) : course.sourceVideo;
   const hasScene = video && Number.isInteger(s.seconds) && s.seconds >= 0;
   const videoUrl = youtubeUrl(video || course.sourceVideo) + (hasScene ? '&amp;t=' + s.seconds + 's' : '');
   const sceneLink = hasScene ? '<div class="place-scene"><dt>' + icon('video') + '영상 속 장면</dt><dd>' +
-    '<a href="' + videoUrl + '" target="_blank" rel="noopener noreferrer">' + video.episode + '편 · ' +
+    '<a href="' + videoUrl + '" target="_blank" rel="noopener noreferrer">' + videoLabel(video) + ' · ' +
     timeLabel(s.seconds) + icon('external') + '</a></dd></div>' : '';
   const keywords = s.keywords?.length ? '<ul class="place-keywords" aria-label="여행 키워드">' +
     s.keywords.map(word => '<li>' + word + '</li>').join('') + '</ul>' : '';
-  main.innerHTML = '<article class="detail-content place-detail">' + dayMap(s.day, filter, s.id) +
-    '<div class="place-intro"><p class="place-meta">' + s.day + '일차 · ' + s.number + '번째 방문지</p>' +
-    '<div class="place-title"><h1>' + s.name + '</h1><span>' + s.kind + '</span></div></div>' +
-    '<section class="place-story"><h2>영상 속 수길따라님의 여행</h2><p>' + (s.sceneSummary || s.summary) + '</p>' + keywords + '</section>' +
-    '<dl class="place-facts"><div><dt>' + icon('pin') + '장소명</dt><dd>' + s.local + '</dd></div>' +
+  const story = s.sceneSummary || s.summary;
+  main.innerHTML = '<article class="detail-content place-detail">' + journeyMap(s.day, s) +
+    '<div class="place-intro"><p class="place-meta">' + sectionLabel(course, s.day) + ' · ' + s.number + (course.byRegion ? '번째 장면' : '번째 방문지') + '</p>' +
+    '<div class="place-title"><h1>' + s.name + '</h1>' + (s.kind ? '<span>' + s.kind + '</span>' : '') + '</div></div>' +
+    (story ? '<section class="place-story"><h2>영상 속 수길따라님의 여행</h2><p>' + story + '</p>' + keywords + '</section>' : '') +
+    '<dl class="place-facts">' + (s.local ? '<div><dt>' + icon('pin') + '장소명</dt><dd>' + s.local + '</dd></div>' : '') +
     sceneLink + '</dl>' +
     (s.tip ? '<section class="tip-box"><h2>' + icon('tip') + '여행 팁</h2><p>' + s.tip + '</p></section>' : '') +
     (s.visitNote ? '<p class="place-note">' + s.visitNote + '</p>' : '') +
-    '<div class="place-actions">' + external(mapUrl, '지도에서 보기', 'action secondary', 'pin') +
+    travelNotes(course.notes?.filter(note => note.stopId === s.id), true) +
+    '<div class="place-actions">' + external(mapUrl, mapQuery ? '구글 지도에서 위치 보기' : '주변 지도 보기', 'action secondary', 'pin') +
     external(videoUrl, hasScene ? '영상 속 장면 보기' : '관련 영상 보기', 'action primary', 'play') + '</div></article>';
 }
 bookmarkButton.addEventListener('click', () => {
@@ -407,10 +484,10 @@ function render() {
   const countryCourses = country ? travelCourses.filter(item => item.countryId === country.id) : [];
   const series = travelSeries.find(item => path === '#series/' + item.id);
   const coursePath = country ? countryRoute[2] : path.startsWith('#course/') && path.slice('#course'.length);
-  const match = /^\/([a-z-]+)\/(all|[1-9]\d*)(?:\/([a-z-]+))?$/.exec(coursePath || '');
-  const visit = /^#visit\/(?:([a-z-]+)\/)?([a-z-]+)$/.exec(path);
+  const match = /^\/([a-z-]+)\/(all|[1-9]\d*)(?:\/([a-z0-9-]+))?$/.exec(coursePath || '');
+  const visit = /^#visit\/(?:([a-z-]+)\/)?([a-z0-9-]+)$/.exec(path);
   const matchedCourse = match && (country ? countryCourses : travelCourses).find(item =>
-    item.id === match[1] && (match[2] === 'all' || Number(match[2]) <= item.days.length));
+    item.id === match[1] && (match[2] === 'all' || Number(match[2]) <= item.sections.length));
   const filter = matchedCourse ? match[2] : 'all';
   course = matchedCourse || countryCourses[0] || (visit && travelCourses.find(item =>
     visit[1] ? item.id === visit[1] : item.visits.some(stop => stop.id === visit[2])));
@@ -435,7 +512,7 @@ function render() {
   }
   const returning = previousView === 'place' && course && (view === 'country' || view === 'course') && returnPlace;
   if (stop && (previousView === 'country' || previousView === 'course')) {
-    const link = document.activeElement?.closest('.map-marker, .stop-row');
+    const link = document.activeElement?.closest('.stop-row');
     itineraryPosition = { hash: routeHash(filter), top: main.scrollTop, linkId: link?.id || 'row-' + stop.id };
   }
   if (stop) {
