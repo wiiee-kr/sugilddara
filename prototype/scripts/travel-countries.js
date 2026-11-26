@@ -16,7 +16,7 @@ function destination(id, name, region, places, films, aliases = []) {
   return { id, name, region, places, films, aliases };
 }
 
-const countriesByContinent = {
+const countryCatalog = {
   asia: [
     destination('tw', '대만', '동아시아', '타이베이 · 화롄', [
       countryFilm('m2830fZ78c8', '대만 자유여행 몰아보기'),
@@ -77,9 +77,16 @@ const countriesByContinent = {
     destination('tn', '튀니지', '북아프리카', '카이루안 · 모나스티르', [countryFilm('a1odKgU4Oro', '튀니지 여행 몰아보기')])
   ]
 };
-const travelCountries = Object.entries(countriesByContinent).flatMap(([continent, entries]) =>
+// Temporarily limit the destinations shown in the app while keeping the full catalog and bookmarks.
+const visibleCountryIds = new Set(['ge', 'am', 'az', 'kz', 'kg', 'la', 'uz', 'tj']);
+const allTravelCountries = Object.entries(countryCatalog).flatMap(([continent, entries]) =>
   entries.map(entry => ({ ...entry, continent }))
-).sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+);
+const travelCountries = allTravelCountries.filter(country => visibleCountryIds.has(country.id))
+  .sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+const countriesByContinent = Object.fromEntries(Object.keys(countryCatalog).map(continent =>
+  [continent, travelCountries.filter(country => country.continent === continent)]
+));
 
 const countryBookmarkKey = country => 'sugilddara.bookmarks.country.' + country.id;
 const isCountryBookmarked = country => localStorage.getItem(countryBookmarkKey(country)) === '1';

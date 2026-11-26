@@ -197,16 +197,10 @@ button { cursor: pointer; }
   display: block; width: 100%; height: clamp(280px, 75vw, 340px);
   border: 1px solid var(--line); border-radius: 16px; background: #f2f4f5;
 }
-.journey-map figcaption { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; }
-.journey-map figcaption p {
-  flex-basis: 100%; margin-top: 8px; color: var(--muted); font-size: var(--type-body);
+.journey-map figcaption {
+  margin-top: 8px; color: var(--muted); font-size: var(--type-body);
   line-height: 1.5; word-break: keep-all; overflow-wrap: anywhere;
 }
-.journey-map .map-link {
-  display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
-  color: var(--blue-text); font-size: var(--type-body); font-weight: 500;
-}
-.journey-map .map-link .icon { width: 16px; height: 16px; }
 .stops { list-style: none; padding: 0; margin-top: var(--section-content-gap); }
 .stops li { position: relative; }
 .stops li:not(:last-child)::before {

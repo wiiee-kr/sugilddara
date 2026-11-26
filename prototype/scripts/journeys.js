@@ -37,7 +37,7 @@ const travelCourses = [{
     ] }
   ]
 }, ...filmItineraries.map(itinerary => {
-  const country = travelCountries.find(entry => entry.id === itinerary.countryId);
+  const country = allTravelCountries.find(entry => entry.id === itinerary.countryId);
   const film = country.films.find(entry => entry.id === itinerary.sourceVideoId);
   return {
     ...itinerary, id: country.id + '-film', byRegion: true,
@@ -46,7 +46,7 @@ const travelCourses = [{
     thumbnail: 'https://i.ytimg.com/vi/' + film.id + '/mqdefault.jpg',
     videos: [{ ...film, duration: timeLabel(itinerary.durationSeconds) }]
   };
-})].map(item => ({
+})].filter(item => visibleCountryIds.has(item.countryId)).map(item => ({
   ...item,
   sourceVideo: item.videos.find(video => video.id === item.sourceVideoId),
   visits: item.sections.flatMap((section, index) => section.stops.map((stop, i) => ({ ...stop, day: index + 1, number: i + 1 })))
@@ -180,8 +180,7 @@ function home() {
     return '<a href="' + homeHash(id) + '"' + (id === selectedContinent ? ' aria-current="page"' : '') + '>' +
       (continentNames[id] || '전체') + ' <span>' + count + '</span></a>';
   }).join('');
-  const countries = (selectedContinent === 'all' ? continents : [selectedContinent]).flatMap(id =>
-    travelCountries.filter(country => country.continent === id));
+  const countries = (selectedContinent === 'all' ? continents : [selectedContinent]).flatMap(id => countriesByContinent[id]);
   main.innerHTML = '<div class="home-content"><h2 class="destination-title">수길따라 여행따라 ✈️</h2>' +
     '<nav class="continent-chips" aria-label="대륙 선택">' + filters + '</nav>' +
     '<ul class="destination-list">' + countries.map(country => destinationRow(country, countryHash(country))).join('') + '</ul></div>';
@@ -252,8 +251,9 @@ function seriesDetail(series) {
   header('여행 시리즈', searchOrigin === null ? '#home' : searchHash(searchOrigin),
     searchOrigin === null ? '홈으로 돌아가기' : '검색 결과로 돌아가기');
   const courses = travelCourses.filter(item => item.series === series.id);
+  const cities = Object.entries(series.citiesByCountry).filter(([id]) => visibleCountryIds.has(id)).flatMap(([, names]) => names);
   main.innerHTML = '<article class="series-detail">' + coverArt(series) + '<h1>' + series.name +
-    '</h1><p class="series-cities">' + icon('pin') + series.cities.join(' · ') + '</p>' +
+    '</h1><p class="series-cities">' + icon('pin') + cities.join(' · ') + '</p>' +
     (courses.length ? '<section class="search-section"><h2>여행 코스</h2><ul class="search-list">' +
       courses.map(item => courseRow(item, courseHash(item, item.byRegion ? 'all' : 1, searchOrigin, series))).join('') + '</ul></section>' : '') +
     (series.films.length ? '<section class="collection-section"><h2>여행 영상</h2><ul class="film-list">' +
@@ -323,49 +323,30 @@ function googleSearchUrl(query) {
   return 'https://www.google.com/maps/search/?' + new URLSearchParams({ api: '1', query });
 }
 
-// Mobile Google Maps links support three intermediate stops. Adjacent links share an endpoint.
-function routeLinks(stops) {
-  const links = [];
-  for (let i = 0; i < stops.length - 1; i += 4) {
-    const leg = stops.slice(i, i + 5);
-    const params = new URLSearchParams({
-      api: '1', origin: placeMapQuery(leg[0]), destination: placeMapQuery(leg.at(-1)), travelmode: 'driving'
-    });
-    if (leg.length > 2) params.set('waypoints', leg.slice(1, -1).map(placeMapQuery).join('|'));
-    const label = stops.length <= 5 ? '구글 지도에서 경로 보기' : leg[0].number + '번~' + leg.at(-1).number + '번 경로 보기';
-    links.push(external('https://www.google.com/maps/dir/?' + params, label, 'map-link', 'external'));
-  }
-  return links.join('');
-}
-
 function journeyMap(day, selected) {
   const stops = selected ? [selected] : course.visits.filter(stop => stop.day === day);
   const located = stops.filter(placeMapQuery);
   const label = selected?.name || sectionLabel(course, day);
   const params = new URLSearchParams({ hl: 'ko', output: 'embed' });
   let caption;
-  let links = '';
   if (located.length > 1) {
     params.set('saddr', placeMapQuery(located[0]));
     params.set('daddr', located.slice(1).map(placeMapQuery).join(' to:'));
     params.set('dirflg', 'd');
     caption = '구글 지도의 추천 차량 경로예요.';
-    links = routeLinks(located);
   } else {
     const query = located.length ? placeMapQuery(located[0]) : regionMapQuery(day, selected);
     params.set('q', query);
     if (located[0]?.coords) params.set('ll', located[0].coords.join(','));
     params.set('z', located.length ? '15' : '11');
     caption = located.length ? (selected ? '' : located[0].name) : '촬영 위치 기록이 없어 주변 지역을 표시해요.';
-    if (!selected) links = external(googleSearchUrl(query), '구글 지도에서 열기', 'map-link', 'external');
   }
   if (!selected && located.length && located.length < stops.length) {
     caption += ' 전체 ' + stops.length + '곳 중 위치를 찾을 수 있는 ' + located.length + '곳을 표시해요.';
   }
-  const footer = (caption ? '<p>' + caption + '</p>' : '') + links;
   return '<figure class="journey-map"><iframe title="' + label + ' 구글 지도" src="https://maps.google.com/maps?' +
     params.toString().replace(/&/g, '&amp;') + '" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' +
-    (footer ? '<figcaption>' + footer + '</figcaption>' : '') + '</figure>';
+    (caption ? '<figcaption>' + caption + '</figcaption>' : '') + '</figure>';
 }
 function stopRow(s, filter) {
   return '<li><a class="stop-row" id="row-' + s.id + '" href="' + placeHash(s, filter) +
@@ -450,7 +431,7 @@ function placeDetail(s, filter) {
     (s.tip ? '<section class="tip-box"><h2>' + icon('tip') + '여행 팁</h2><p>' + s.tip + '</p></section>' : '') +
     (s.visitNote ? '<p class="place-note">' + s.visitNote + '</p>' : '') +
     travelNotes(course.notes?.filter(note => note.stopId === s.id), true) +
-    '<div class="place-actions">' + external(mapUrl, mapQuery ? '구글 지도에서 위치 보기' : '주변 지도 보기', 'action secondary', 'pin') +
+    '<div class="place-actions">' + external(mapUrl, mapQuery ? '구글지도로 보기' : '주변 지도 보기', 'action secondary', 'pin') +
     external(videoUrl, hasScene ? '영상 속 장면 보기' : '관련 영상 보기', 'action primary', 'play') + '</div></article>';
 }
 bookmarkButton.addEventListener('click', () => {
