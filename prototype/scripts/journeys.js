@@ -157,12 +157,6 @@ function filmRow(film) {
     '</strong>' + (film.places ? '<span>' + film.places + '</span>' : '') + '</span>' + icon('external') + '</a></li>';
 }
 
-function countryCard(country, query = null) {
-  return '<li><a id="country-' + country.id + '" class="country-card" href="' + countryHash(country, query) + '">' +
-    '<span class="country-card__top">' + countryFlag(country) + icon('next') + '</span>' +
-    '<strong>' + country.name + '</strong><span class="country-card__places">' + (country.places || country.region) + '</span></a></li>';
-}
-
 function home() {
   header('홈');
   const continents = Object.keys(continentNames).filter(id => countriesByContinent[id]?.length);
@@ -243,14 +237,14 @@ function seriesDetail(series) {
   const courses = travelCourses.filter(item => item.series === series.id);
   main.innerHTML = '<article class="series-detail">' + coverArt(series) + '<h1>' + series.name +
     '</h1><p class="series-cities">' + icon('pin') + series.cities.join(' · ') + '</p>' +
-    (courses.length ? '<section class="search-section"><h2>여행 코스</h2><ul>' +
+    (courses.length ? '<section class="search-section"><h2>여행 코스</h2><ul class="search-list">' +
       courses.map(item => courseRow(item, courseHash(item, 1, searchOrigin, series))).join('') + '</ul></section>' : '') +
     (series.films.length ? '<section class="collection-section"><h2>여행 영상</h2><ul class="film-list">' +
       series.films.map(filmRow).join('') + '</ul></section>' : '') + '</article>';
 }
 
 function searchSection(title, rows) {
-  return rows.length ? '<section class="search-section"><h2>' + title + '</h2><ul>' + rows.join('') + '</ul></section>' : '';
+  return rows.length ? '<section class="search-section"><h2>' + title + '</h2><ul class="search-list">' + rows.join('') + '</ul></section>' : '';
 }
 
 function searchResults(value) {
@@ -265,7 +259,7 @@ function searchResults(value) {
   ].join(' ')));
   const countryRows = (destinations.length ? destinations : travelCountries.filter(country =>
     country.films.some(film => matches([film.title, film.places || ''].join(' '))))
-  ).map(country => countryCard(country, value));
+  ).map(country => destinationRow(country, countryHash(country, value)));
   const placeRows = [];
   for (const item of travelCourses) {
     const destination = [item.country, item.city, ...item.keywords].join(' ');
@@ -275,7 +269,7 @@ function searchResults(value) {
     }
   }
   if (!countryRows.length && !placeRows.length) return '<p class="search-missing">검색 결과가 없어요.</p>';
-  const countries = countryRows.length ? '<section class="search-section"><h2>여행지</h2><ul class="country-grid">' + countryRows.join('') + '</ul></section>' : '';
+  const countries = countryRows.length ? '<section class="search-section"><h2>여행지</h2><ul class="destination-list">' + countryRows.join('') + '</ul></section>' : '';
   return countries + searchSection('방문 장소', placeRows);
 }
 

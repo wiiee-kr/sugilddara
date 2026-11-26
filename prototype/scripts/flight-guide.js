@@ -46,10 +46,6 @@ const steps = arriving ? [
 function renderGuide() {
   const index = ['#2', '#3'].indexOf(location.hash) + 1;
   const step = steps[index];
-  document.querySelector('#ticket-title').textContent = [query.get('flight'), arriving ? '인천 도착' : '인천 출발'].filter(Boolean).join(' · ');
-  const date = query.get('date');
-  const dateLabel = arriving ? '도착일' : '탑승일';
-  document.querySelector('#ticket-date').textContent = date ? dateLabel + ' ' + date : '';
   const labels = arriving ? ['입국심사', '짐 찾기', '도착장'] : ['체크인', '출국 수속', '탑승구'];
   document.querySelector('#step-nav').replaceChildren(...labels.map((label, i) => {
     const item = document.createElement(i === index ? 'span' : 'a');

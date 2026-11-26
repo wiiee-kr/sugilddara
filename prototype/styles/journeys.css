@@ -64,22 +64,10 @@ button { cursor: pointer; }
 .continent-chips a span { color: var(--muted); font-size: var(--type-secondary); font-variant-numeric: tabular-nums; }
 .continent-chips a[aria-current] { border-color: var(--ds-product-primary); background: var(--ds-product-primary); color: white; }
 .continent-chips a[aria-current] span { color: inherit; }
-.country-grid, .film-list { list-style: none; padding: 0; }
-.country-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.country-grid > li { min-width: 0; }
-.search-section .country-grid > li { border: 0; }
-.country-card, .search-section .country-card {
-  display: flex; flex-direction: column; align-items: stretch; height: 100%;
-  padding: 13px 14px 14px; border: 1px solid #e1e5e9; border-radius: 14px; background: white;
-  word-break: keep-all; overflow-wrap: anywhere;
-}
-.country-card__top { display: flex; align-items: center; justify-content: space-between; gap: 4px; margin-bottom: 9px; }
-.country-card__top > .icon { width: 16px; height: 16px; color: #757f89; }
-.country-card strong { font-size: var(--type-heading); line-height: 1.35; letter-spacing: -.03em; }
-.country-card__places, .film-text > span, .series-cities {
+.film-list { list-style: none; padding: 0; }
+.film-text > span, .series-cities {
   color: var(--muted); font-size: var(--type-label); line-height: 1.5;
 }
-.country-card__places { margin-top: 3px; }
 .country-detail { padding-inline: 20px; }
 .country-bookmark-bar {
   position: relative; flex: none; padding: 8px 16px calc(12px + env(safe-area-inset-bottom, 0px)); background: white;
@@ -126,12 +114,6 @@ button { cursor: pointer; }
 .country-video__text small { display: block; margin-top: 3px; font-size: var(--type-secondary); color: var(--muted); }
 .country-detail .country-videos + .day-section, .country-places { margin-top: 24px; }
 .country-places p { margin-top: 8px; word-break: keep-all; }
-@media (max-width: 355px) {
-  .country-card, .search-section .country-card { padding-inline: 10px; }
-}
-@media (max-width: 270px) {
-  .country-grid { grid-template-columns: 1fr; }
-}
 .series-art {
   display: block; position: relative; isolation: isolate;
   overflow: hidden; background: #e5e9e4; min-width: 0;
@@ -176,7 +158,7 @@ button { cursor: pointer; }
 }
 .place-actions .action.primary { background: var(--ds-product-primary); color: white; }
 .day-section, .source-film { margin-top: var(--section-gap); }
-.search-section li + li { border-top: 1px solid var(--line); }
+.search-list li + li { border-top: 1px solid var(--line); }
 .source-film a { display: flex; align-items: center; gap: 12px; padding-block: 14px; }
 .source-film strong, .source-film small { display: block; }
 .source-film small { color: var(--muted); font-size: var(--type-secondary); margin-top: 2px; }
@@ -320,16 +302,17 @@ button { cursor: pointer; }
 .journey-search input[type=search]::placeholder { color: #697078; }
 .search-intro { padding: 32px 0; text-align: center; color: var(--muted); }
 .search-section { margin-top: var(--section-gap); }
-.search-section ul { padding: 0; list-style: none; }
-.search-section a { display: block; padding: 12px 0; }
-.search-section .search-course { display: flex; gap: 12px; align-items: center; }
+.search-list { padding: 0; list-style: none; }
+.search-list a { display: block; padding: 12px 0; }
+.search-list li:first-child > .search-place { padding-top: 0; }
+.search-list .search-course { display: flex; gap: 12px; align-items: center; }
 .search-course img { flex: none; width: 64px; height: 56px; border-radius: 8px; object-fit: cover; }
-.search-section strong, .search-section small { display: block; }
-.search-section small { margin-top: 2px; color: var(--muted); font-size: var(--type-label); }
+.search-list strong, .search-list small { display: block; }
+.search-list small { margin-top: 2px; color: var(--muted); font-size: var(--type-label); }
 .search-missing { color: var(--muted); text-align: center; padding: 56px 12px 20px; }
 @media (hover: hover) {
   .place-actions .primary:hover { background: var(--ds-primary-hover); }
-  .country-card:hover strong, .film-row:hover strong, .stop-row:hover strong, .search-section a:hover strong { color: var(--blue-text); }
+  .film-row:hover strong, .stop-row:hover strong, .search-list a:hover strong { color: var(--blue-text); }
 }
 @media (max-width: 22rem) {
   .map-canvas { height: 220px; }
