@@ -22,8 +22,10 @@
   content: "";
   flex: 1 1 8px;
   min-width: 4px;
+  height: 2px;
   margin-inline: 5px;
-  border-top: 2px solid #c7d1d8;
+  border-radius: 9999px;
+  background-color: #c7d1d8;
 }
 
 .step-nav > :last-child { flex: 0 1 auto; }
