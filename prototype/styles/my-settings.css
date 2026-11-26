@@ -1,0 +1,47 @@
+.settings-page {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  font-size: var(--type-body);
+  line-height: 1.55;
+}
+.settings-page main { flex: 1; display: flex; flex-direction: column; }
+.settings-panel { padding-inline: 16px; overflow-wrap: anywhere; }
+.settings-page :is(#notifications, #account):not([hidden]) { flex: 1; display: flex; flex-direction: column; }
+.settings-page h2, #settings-dialog h2 { font-size: var(--type-heading); margin: 0 0 12px; }
+.settings-page .app-version__value { font-size: var(--type-label); color: #666; }
+.business-footer { display: grid; gap: 4px; margin-top: 32px; color: #686868; font-size: var(--type-caption); overflow-wrap: anywhere; }
+.business-footer a { color: inherit; }
+.panel-footer { margin-top: auto; padding-top: 32px; }
+.panel-footer p { margin-bottom: 12px; }
+.settings-button {
+  display: block; width: 100%; min-height: 48px; padding: 10px 16px;
+  border: 1px solid #ccc; border-radius: 12px; background: white; font: inherit;
+}
+.settings-button:disabled { opacity: .45; cursor: default; }
+.notification-toggle { display: flex; align-items: center; justify-content: space-between; gap: 16px; position: relative; cursor: pointer; }
+.notification-toggle input { position: absolute; right: 0; width: 51px; height: 31px; margin: 0; opacity: 0; cursor: pointer; }
+.notification-toggle span { flex: 0 0 51px; height: 31px; border-radius: 999px; background: #e9e9eb; pointer-events: none; }
+.notification-toggle span::after { content: ''; display: block; width: 27px; height: 27px; margin: 2px; border-radius: 50%; background: white; box-shadow: 0 2px 4px #0002; }
+.notification-toggle input:checked + span { background: var(--ds-product-primary); }
+.notification-toggle input:checked + span::after { transform: translateX(20px); }
+.notification-toggle input:focus-visible + span { outline: 2px solid var(--ds-product-primary); outline-offset: 3px; }
+.account-details { margin: 0; }
+.account-details > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; padding-block: 8px; }
+.account-details dd { margin: 0 0 0 auto; color: #666; }
+.account-actions { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+.account-actions :is(a, button) { display: inline-flex; align-items: center; min-height: 48px; padding: 0; border: 0; background: transparent; color: #666; font: inherit; text-decoration: none; }
+.consent { display: flex; align-items: center; gap: 8px; min-height: 48px; margin: 16px 0; }
+.consent input { width: 20px; height: 20px; accent-color: var(--ds-product-primary); }
+#settings-dialog p, #settings-dialog .popup-actions button { font-size: var(--type-body); }
+.notice-list { list-style: none; margin: 0; padding: 0; }
+.notice-list li + li { border-top: 1px solid #eee; }
+.notice-list a { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 16px; color: inherit; text-decoration: none; }
+.notice-list strong { display: block; font-weight: 500; }
+.notice-list time, .notice-detail time { display: block; margin-top: 6px; font-size: var(--type-caption); color: #666; }
+.notice-list svg { width: 18px; height: 18px; color: #888; }
+.notice-detail { padding-inline: 16px; overflow-wrap: anywhere; }
+.notice-detail header { padding-bottom: 16px; border-bottom: 1px solid #eee; }
+.notice-detail h3 { font-size: var(--type-body); margin: 24px 0 12px; }
+.notice-detail p + p { margin-top: 16px; }
+.notice-detail .example-note { color: #666; font-size: var(--type-caption); }

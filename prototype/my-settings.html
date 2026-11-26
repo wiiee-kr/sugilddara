@@ -16,7 +16,7 @@
   <script src="scripts/travel-series.js" defer></script>
   <script src="scripts/travel-countries.js?v=country-bookmarks" defer></script>
   <script src="scripts/destination-row.js" defer></script>
-  <script src="scripts/my-settings.js?v=destination-list" defer></script>
+  <script src="scripts/my-settings.js?v=settings-menu" defer></script>
 <link rel="stylesheet" href="styles/focus.css?v=keyboard-navigation">
 <script src="scripts/focus.js" defer></script>
 <link rel="stylesheet" href="styles/app-nav.css">
@@ -25,14 +25,78 @@
 <link rel="stylesheet" href="styles/dialog-actions.css"><script src="scripts/dialog-actions.js" defer></script><link rel="stylesheet" href="styles/network-error.css">
 <script src="scripts/network-error.js" defer></script>
 <link rel="stylesheet" href="styles/viewport.css">
+  <link rel="stylesheet" href="styles/my-settings.css">
 </head>
-<body class="app-viewport"><div class="my-page"><header class="page-bar"><div class="app-bar__leading"><a class="app-bar__icon" href="mypage.html" aria-label="뒤로가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg></a><h1 id="title">북마크한 여행지</h1></div></header>
+<body class="app-viewport"><div class="my-page settings-page"><header class="page-bar"><div class="app-bar__leading"><a class="app-bar__icon" href="mypage.html" aria-label="뒤로가기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg></a><h1 id="title" tabindex="-1">북마크한 여행지</h1></div></header>
 <main>
-  <section id="bookmarks" hidden>
+  <section id="bookmarks" data-title="북마크한 여행지" hidden>
     <ul class="destination-list" aria-label="북마크한 여행지" hidden></ul>
     <p class="bookmark-empty"><img src="assets/travel-plane.svg" alt="" width="84" height="64"><span></span></p>
   </section>
-  <section id="settings" class="menu-section" aria-label="설정" hidden>
-    <a class="menu-item" href="community.html#/blocked"><img class="menu-icon" src="assets/icons/untitled-ui/user-x-01.svg" alt="">차단한 사용자</a>
+  <section id="settings" class="menu-section" data-title="설정" hidden>
+    <nav aria-label="설정 메뉴">
+      <a class="menu-item" href="community.html#/blocked"><img class="menu-icon" src="assets/icons/untitled-ui/user-x-01.svg" alt="">차단한 사용자</a>
+      <a class="menu-item" href="#notifications"><img class="menu-icon" src="assets/icons/untitled-ui/bell-01.svg" alt="">알림 설정</a>
+      <a class="menu-item" href="#account"><img class="menu-icon" src="assets/icons/untitled-ui/user-01.svg" alt="">내 계정</a>
+      <a class="menu-item" href="#notices"><img class="menu-icon" src="assets/icons/untitled-ui/announcement-01.svg" alt="">공지사항</a>
+      <a class="menu-item" href="#support"><img class="menu-icon" src="assets/icons/message-question.svg" alt="">이용 문의</a>
+      <div class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6 M12 7h.01"/></svg>앱 버전<span class="app-version__value">0.0.0</span></div>
+      <a class="menu-item" href="#terms"><img class="menu-icon" src="assets/icons/untitled-ui/file-check-02.svg" alt="">서비스 이용약관</a>
+      <a class="menu-item" href="#privacy"><img class="menu-icon" src="assets/icons/untitled-ui/shield-tick.svg" alt="">개인정보 처리방침</a>
+    </nav>
+    <footer class="business-footer" aria-label="사업자 정보">
+      <p>대표이사 범지민 | 사업자등록번호 236-81-02950</p>
+      <p>통신판매업신고번호 2026-인천연수구-2725</p>
+      <p>인천광역시 연수구 갯벌로 12, 송도본원 7층 7-10호 (송도동, 인천창조경제혁신센터)</p>
+      <p>TEL <a href="tel:050713361915">0507-1336-1915</a> | EMAIL <a href="mailto:wiiee.company@gmail.com">wiiee.company@gmail.com</a></p>
+    </footer>
   </section>
-</main></div></body></html>
+  <section id="notifications" class="settings-panel" data-title="알림 설정" hidden>
+    <div class="detail-menu-list">
+      <label class="notification-toggle">내 글의 댓글 알림<input type="checkbox" role="switch" name="comment" checked><span aria-hidden="true"></span></label>
+      <label class="notification-toggle">내 글의 좋아요 알림<input type="checkbox" role="switch" name="postLike" checked><span aria-hidden="true"></span></label>
+      <label class="notification-toggle">내 댓글의 좋아요 알림<input type="checkbox" role="switch" name="commentLike" checked><span aria-hidden="true"></span></label>
+    </div>
+    <div class="panel-footer">
+      <p>푸시 알림을 받으려면 휴대폰에서도 수길따라 알림을 허용해 주세요.</p>
+      <button class="settings-button" id="notification-help" type="button">휴대폰 알림 설정 방법 보기</button>
+    </div>
+  </section>
+  <section id="account" class="settings-panel" data-title="내 계정" hidden>
+    <dl class="account-details">
+      <div><dt>로그인 방식</dt><dd>연결된 계정 없음</dd></div>
+      <div><dt>가입한 계정</dt><dd>로그인 후 표시</dd></div>
+    </dl>
+    <div class="panel-footer account-actions">
+      <button type="button" id="logout">로그아웃</button>
+      <a href="#withdraw">회원탈퇴</a>
+    </div>
+  </section>
+  <section id="withdraw" class="settings-panel" data-title="회원탈퇴" hidden>
+    <h2>탈퇴 전에 확인해 주세요</h2>
+    <p>지금은 회원탈퇴 절차를 미리 보는 화면이에요. 계정과 저장한 여행지는 그대로 유지돼요.</p>
+    <label class="consent"><input type="checkbox" id="withdraw-consent">안내 내용을 확인했어요</label>
+    <button type="button" class="settings-button" id="withdraw-confirm" disabled>회원탈퇴</button>
+  </section>
+  <section id="notices" data-title="공지사항" hidden>
+    <ul class="notice-list" aria-label="공지사항 목록"></ul>
+    <article class="notice-detail" hidden></article>
+  </section>
+  <section id="support" class="settings-panel" data-title="이용 문의" hidden>
+    <h2>이용 중 궁금한 점이 있으신가요?</h2>
+    <p>문의를 남길 수 있는 곳은 서비스 오픈 때 안내해 드릴게요.</p>
+  </section>
+  <section id="terms" class="settings-panel" data-title="서비스 이용약관" hidden>
+    <p>수길따라 서비스 이용약관을 준비하고 있어요.</p>
+  </section>
+  <section id="privacy" class="settings-panel" data-title="개인정보 처리방침" hidden>
+    <p>수길따라 개인정보 처리방침을 준비하고 있어요.</p>
+  </section>
+</main></div>
+<dialog id="settings-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-copy">
+  <h2 id="confirm-title"></h2>
+  <p id="confirm-copy"></p>
+  <button type="button" id="confirm-action" hidden></button>
+  <button type="button" id="confirm-cancel">닫기</button>
+</dialog>
+</body></html>
