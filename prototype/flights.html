@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="styles/fonts.css">
 <link rel="stylesheet" href="styles/design-system.css?v=flight-gap36">
 <link rel="stylesheet" href="styles/app-nav.css">
-<link rel="stylesheet" href="styles/flights.css?v=bus-hidden">
+<link rel="stylesheet" href="styles/flights.css?v=flight-notice-3">
 <link rel="stylesheet" href="styles/network-error.css">
 <script src="scripts/network-error.js" defer></script>
 <link rel="stylesheet" href="styles/focus.css?v=keyboard-navigation">
@@ -19,8 +19,8 @@
 <main>
 <form>
 <section>
-<h1>내 항공편 찾기</h1>
-<p>인천공항에서 출발하거나 도착하는 항공편만 조회할 수 있어요.</p>
+<h1>비행기 타는 순서 미리보기</h1>
+<p>인천공항에서 출발/도착하는 항공편만 조회할 수 있어요.</p>
 <div class="choices directions" role="group" aria-label="항공편 방향">
 <label><input type="radio" name="direction" value="depart" checked><span>인천에서 출발</span></label>
 <label><input type="radio" name="direction" value="arrive"><span>인천에 도착</span></label>
@@ -41,7 +41,8 @@
 </div>
 <input id="custom-date" type="hidden" name="date">
 </section>
-<button type="submit">항공편 조회하기</button>
+<button type="submit" aria-describedby="flight-notice">항공편 조회하기</button>
+<p id="flight-notice">정확성을 위해 항공사나 공항 전광판에서도 확인해주세요.</p>
 <p id="status" role="status"></p>
 </form>
 <a hidden class="bus" href="https://www.airport.kr/ap_ko/976/subview.do">공항버스 안내 보기 ↗</a>
@@ -60,5 +61,5 @@
 <div id="days"></div>
 <button type="button" id="close-calendar">닫기</button>
 </dialog>
-<script src="scripts/flights.js?v=order-after-search"></script>
+<script src="scripts/flights.js?v=fixed-title"></script>
 </body></html>

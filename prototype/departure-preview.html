@@ -105,6 +105,7 @@ function showStepNav(pass, bag, stage) {
 function updateRoute() {
  const {pass,bag} = Object.fromEntries(new FormData(form));
  showStepNav(pass, bag, 'start');
+ next.textContent = pass === 'yes' && bag === 'yes' ? '짐 맡길 카운터 안내 보기' : '다음';
  if (pass && bag) {
    next.href='#'+pass+'/'+bag+(pass==='yes' && bag==='no'?'/1':'');
    next.removeAttribute('aria-disabled');
@@ -148,8 +149,8 @@ function render() {
 
  } else if(stage==='counter'){
    const needsPass=pass==='no';
-   title=needsPass?(bag==='yes'?'탑승권을 받고 짐을 맡기세요':'탑승권을 받으세요'):'짐을 맡기세요';
-   detail=needsPass?'출발층 전광판에서 내 편명 옆의 카운터 번호를 확인하세요. 그 카운터로 가서 직원에게 여권을 보여주세요.':'출발층에서 내 항공사의 ‘짐 부치는 곳(Bag Drop)’을 찾으세요. 여권과 탑승권을 준비해 주세요.';
+   title=needsPass?(bag==='yes'?'탑승권을 받고 짐을 맡기세요':'탑승권을 받으세요'):'짐 맡길 카운터로 가세요';
+   detail=needsPass?'출발층 전광판에서 내 편명 옆의 카운터 번호를 확인하세요. 그 카운터로 가서 직원에게 여권을 보여주세요.':'출발층 전광판에서 내 편명의 카운터를 확인하고, 여권과 탑승권을 준비하세요. 셀프 백드롭을 이용할 수 있다면 기기로 짐을 부쳐도 돼요.';
    place=['체크인 구역 예시 · 제2여객터미널','A. B. C. D 구역'];
    action='출국장 안내 보기'; target=path+'/1';
  } else if(stage==='security'){

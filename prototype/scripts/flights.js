@@ -2,8 +2,14 @@ const form = document.querySelector('form');
 const flight = document.querySelector('#flight');
 const statusText = document.querySelector('#status');
 const dateInput = document.querySelector('#custom-date');
+function updateDateLabel() {
+  const arriving = form.elements.direction.value === 'arrive';
+  document.querySelector('#date-title').textContent = arriving ? '도착일' : '출발일';
+}
+form.querySelector('.directions').addEventListener('change', updateDateLabel);
+window.addEventListener('pageshow', updateDateLabel);
+
 form.addEventListener('change', () => {
-  document.querySelector('#date-title').textContent = form.elements.direction.value === 'depart' ? '출발일' : '도착일';
   if (form.elements.day.value !== 'custom') {
     customChoice.setAttribute('aria-pressed', 'false');
     dateInput.disabled = true;
