@@ -114,7 +114,7 @@ button { cursor: pointer; }
 .country-video .video-thumb { flex: 0 0 26%; }
 .country-video .video-thumb img { aspect-ratio: 4 / 3; }
 .country-video__text, .source-film .video-thumb + span, .search-course > span, .video-list__info {
-  min-width: 0; padding-top: 8px; text-align: start;
+  min-width: 0; padding-top: 4px; text-align: start;
 }
 .search-course > .icon, .source-film a > .icon, .video-list__row > .icon { align-self: center; }
 .country-video__text strong {
