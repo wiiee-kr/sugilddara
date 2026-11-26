@@ -266,27 +266,23 @@ function searchResults(value) {
   const countryRows = (destinations.length ? destinations : travelCountries.filter(country =>
     country.films.some(film => matches([film.title, film.places || ''].join(' '))))
   ).map(country => countryCard(country, value));
-  const courseRows = [];
   const placeRows = [];
   for (const item of travelCourses) {
     const destination = [item.country, item.city, ...item.keywords].join(' ');
-    if (matches([destination, ...item.videos.map(v => v.episode + '편 ' + v.title), ...item.visits.flatMap(s => [s.name, s.local])].join(' '))) {
-      courseRows.push(courseRow(item, courseHash(item, 1, value)));
-    }
     for (const stop of item.visits.filter(s => matches([destination, s.name, s.local].join(' ')))) {
       placeRows.push('<li><a class="search-place" href="#visit/' + item.id + '/' + stop.id + params + '"><strong>' + stop.name +
         '</strong><small>' + item.city + ' 여행 · ' + stop.day + '일차 · ' + stop.kind + '</small></a></li>');
     }
   }
-  if (!countryRows.length && !courseRows.length && !placeRows.length) return '<p class="search-missing">검색 결과가 없어요.</p>';
+  if (!countryRows.length && !placeRows.length) return '<p class="search-missing">검색 결과가 없어요.</p>';
   const countries = countryRows.length ? '<section class="search-section"><h2>여행지</h2><ul class="country-grid">' + countryRows.join('') + '</ul></section>' : '';
-  return countries + searchSection('여행 코스', courseRows) + searchSection('방문 장소', placeRows);
+  return countries + searchSection('방문 장소', placeRows);
 }
 
 function searchPage(value) {
   header('검색', homeHash(selectedContinent), '홈으로 돌아가기');
   main.innerHTML = '<div class="journey-search"><form role="search"><div class="ds-search-field">' +
-    '<input type="search" aria-label="국가와 도시, 코스, 방문 장소 검색" placeholder="어떤 여행지나 장소를 찾고 있나요?" autocomplete="off" enterkeyhint="search">' +
+    '<input type="search" aria-label="여행지와 방문 장소 검색" placeholder="어떤 여행지나 장소를 찾고 있나요?" autocomplete="off" enterkeyhint="search">' +
     '<button class="ds-search-clear" aria-label="검색어 지우기" type="button"></button></div></form>' +
     '<div id="journey-results" aria-live="polite"></div></div>';
   const input = main.querySelector('input');
