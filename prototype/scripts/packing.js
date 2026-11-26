@@ -7,6 +7,7 @@ const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'num
 const defaults=[['여권·결제','여권','결제 카드'],['의류','갈아입을 옷','겉옷','속옷','양말'],['건강·위생','평소 먹는 약','세면도구'],['전자기기','휴대전화','충전기','멀티 어댑터'],['여행 서류','항공권','숙소 예약 확인서']].map(([name,...names],order)=>({id:uid(),name,builtin:true,order,items:names.map(name=>({id:uid(),name,selected:true,done:false}))}));
 let db={base:defaults,lists:[]};let storageError=false;
 try{const raw=localStorage.getItem(KEY);if(raw){const value=JSON.parse(raw);if(!Array.isArray(value.base)||!Array.isArray(value.lists))throw Error();db=value;}}catch{storageError=true;}
+const needsPackingUpdate = !db.travelTemplate || !db.laChecklistAdded;
 // Upgrade the starter template while keeping custom items and saved trips.
 if (!db.travelTemplate) {
   const previous = [['기본','배낭','등산화'],['의류·보온','바람막이','보온 재킷','장갑','모자'],['식량','식수','행동식'],['야영','텐트','침낭','랜턴'],['기타 등산장비','등산스틱','아이젠']];
@@ -21,6 +22,20 @@ if (!db.travelTemplate) {
     }
   }
   db.travelTemplate = true;
+}
+if (!db.laChecklistAdded) {
+  const originalListId = '6efb5117-3d96-4a0a-953e-a6fb80ac7c89';
+  if (!db.lists.some(list => list.id === originalListId)) {
+    const packedItems = new Set(['여권', '결제 카드', '갈아입을 옷']);
+    const groups = clone(defaults);
+    for (const group of groups) {
+      for (const item of group.items) item.done = packedItems.has(item.name);
+    }
+    db.lists.push({id: originalListId, title: 'LA 일주일', date: '2026-11-26', groups});
+  }
+  db.laChecklistAdded = true;
+}
+if (needsPackingUpdate) {
   try { localStorage.setItem(KEY, JSON.stringify(db)); } catch { storageError = true; }
 }
 let mode='home',draft=null,dirty=false,dragged=null,toastTimer;
